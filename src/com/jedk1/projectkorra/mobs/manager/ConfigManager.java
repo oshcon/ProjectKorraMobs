@@ -20,6 +20,8 @@ public class ConfigManager {
 		config.addDefault("Version", 1);
 
 		config.addDefault("Properties.BendFrequency", 150);
+		config.addDefault("Properties.Air.NoFallDamage", true);
+		
 		config.addDefault("Abilities.Air.Enabled", true);
 		config.addDefault("Abilities.Air.AirBlast.Knockback", 1.0);
 		config.addDefault("Abilities.Fire.Enabled", true);
