@@ -3,6 +3,7 @@ package com.jedk1.projectkorra.mobs.manager;
 import com.jedk1.projectkorra.mobs.ability.AirBlast;
 import com.jedk1.projectkorra.mobs.ability.EarthBlast;
 import com.jedk1.projectkorra.mobs.ability.FireBlast;
+import com.jedk1.projectkorra.mobs.ability.FireJet;
 import com.jedk1.projectkorra.mobs.ability.WaterBlast;
 
 public class AbilityManager implements Runnable {
@@ -13,5 +14,6 @@ public class AbilityManager implements Runnable {
 		AirBlast.progressAll();
 		WaterBlast.progressAll();
 		EarthBlast.progressAll();
+		FireJet.progressAll();
 	}
 }
