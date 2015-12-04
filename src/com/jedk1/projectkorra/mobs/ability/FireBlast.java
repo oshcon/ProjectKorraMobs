@@ -4,6 +4,7 @@ import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.util.ParticleEffect;
+import com.projectkorra.projectkorra.waterbending.WaterMethods;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Creature;
@@ -51,7 +52,7 @@ public class FireBlast {
 		if (origin.distance(head) > 20) {
 			return false;
 		}
-		if (!MobMethods.isTransparent(head.getBlock())) {
+		if (!MobMethods.isTransparent(head.getBlock()) || WaterMethods.isWater(head.getBlock())) {
 			return false;
 		}
 		head.add(dir.multiply(1));
