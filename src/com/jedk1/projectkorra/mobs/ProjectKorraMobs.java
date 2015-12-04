@@ -3,6 +3,7 @@ package com.jedk1.projectkorra.mobs;
 import com.jedk1.projectkorra.mobs.ability.AirBlast;
 import com.jedk1.projectkorra.mobs.ability.EarthBlast;
 import com.jedk1.projectkorra.mobs.ability.FireBlast;
+import com.jedk1.projectkorra.mobs.ability.FireJet;
 import com.jedk1.projectkorra.mobs.ability.WaterBlast;
 import com.jedk1.projectkorra.mobs.listener.MobListener;
 import com.jedk1.projectkorra.mobs.manager.AbilityManager;
@@ -24,6 +25,7 @@ public class ProjectKorraMobs extends JavaPlugin {
 		ProjectKorraMobs.log = this.getLogger();
 		
 		new ConfigManager(this);
+		MobMethods.registerDisabledWorlds();
 		getServer().getPluginManager().registerEvents(new MobListener(this), this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new AbilityManager(),0L, 1L);
 	}
@@ -34,6 +36,7 @@ public class ProjectKorraMobs extends JavaPlugin {
 		AirBlast.removeAll();
 		WaterBlast.removeAll();
 		EarthBlast.removeAll();
+		FireJet.removeAll();
 		EntityManager.remove();
 	}
 }
