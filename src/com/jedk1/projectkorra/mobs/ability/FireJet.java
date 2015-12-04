@@ -1,5 +1,6 @@
 package com.jedk1.projectkorra.mobs.ability;
 
+import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 
 import org.bukkit.Location;
@@ -11,8 +12,8 @@ public class FireJet {
 
 	public static ConcurrentHashMap<Integer, FireJet> instances = new ConcurrentHashMap<Integer, FireJet>();
 	
-	private static long duration = 1000;
-	private static double speed = 0.8;
+	private static long duration = ProjectKorraMobs.plugin.getConfig().getLong("Abilities.Fire.FireJet.Duration");
+	private static double speed = ProjectKorraMobs.plugin.getConfig().getDouble("Abilities.Fire.FireJet.Speed");
 	
 	private LivingEntity entity;
 	private Location target;

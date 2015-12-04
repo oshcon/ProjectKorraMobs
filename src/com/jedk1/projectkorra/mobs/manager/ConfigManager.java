@@ -27,6 +27,8 @@ public class ConfigManager {
 		config.addDefault("Abilities.Fire.Enabled", true);
 		config.addDefault("Abilities.Fire.FireBlast.Damage", 2.0);
 		config.addDefault("Abilities.Fire.FireBlast.FireTick", 1000);
+		config.addDefault("Abilities.Fire.FireJet.Duration", 1000);
+		config.addDefault("Abilities.Fire.FireJet.Speed", 0.8);
 		config.addDefault("Abilities.Water.Enabled", true);
 		config.addDefault("Abilities.Water.WaterBlast.Damage", 3.0);
 		config.addDefault("Abilities.Earth.Enabled", true);
