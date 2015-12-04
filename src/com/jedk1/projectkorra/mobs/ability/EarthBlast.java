@@ -3,6 +3,7 @@ package com.jedk1.projectkorra.mobs.ability;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.airbending.AirShield;
 import com.projectkorra.projectkorra.earthbending.EarthMethods;
 import com.projectkorra.projectkorra.util.TempBlock;
 
@@ -68,6 +69,9 @@ public class EarthBlast {
 		}
 		head.add(dir.multiply(1));
 		if (!MobMethods.isTransparent(head.getBlock())) {
+			return false;
+		}
+		if (AirShield.isWithinShield(head)) {
 			return false;
 		}
 		new TempBlock(head.getBlock(), type, data);
