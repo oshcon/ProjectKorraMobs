@@ -3,6 +3,7 @@ package com.jedk1.projectkorra.mobs.ability;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.airbending.AirShield;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 import com.projectkorra.projectkorra.util.TempBlock;
 import com.projectkorra.projectkorra.waterbending.WaterMethods;
@@ -64,14 +65,17 @@ public class WaterBlast {
 		if (!MobMethods.isTransparent(head.getBlock())) {
 			return false;
 		}
+		if (AirShield.isWithinShield(head)) {
+			return false;
+		}
+		if (WaterMethods.isWater(head.getBlock())) {
+			ParticleEffect.WATER_BUBBLE.display((float) Math.random(), (float) Math.random(), (float) Math.random(), 0f, 5, head, 257D);
+		}
 		new TempBlock(head.getBlock(), Material.STATIONARY_WATER, (byte) 8);
 		if (block != null) {
 			TempBlock.revertBlock(block, Material.AIR);
 		}
 		block = head.getBlock();
-		if (WaterMethods.isWater(head.getBlock())) {
-			ParticleEffect.WATER_BUBBLE.display((float) Math.random(), (float) Math.random(), (float) Math.random(), 0f, 5, head.clone().add(.5,.5,.5), 257D);
-		}
 		for (Entity entity : GeneralMethods.getEntitiesAroundPoint(head, 2)) {
 			if (entity instanceof LivingEntity && entity.getEntityId() != this.entity.getEntityId()) {
 				if (entity instanceof Creature) {
