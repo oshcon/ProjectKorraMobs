@@ -1,0 +1,10 @@
+# ProjectKorraMobs
+
+Adds bending mobs to your world!
+
+##Current supported mobs:
+- Zombie
+- Zombie Pigmen
+
+##This plugin requires ProjectKorra Core!
+http://projectkorra.com/
