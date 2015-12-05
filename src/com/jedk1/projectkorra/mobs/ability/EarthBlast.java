@@ -41,7 +41,7 @@ public class EarthBlast {
 	@SuppressWarnings("deprecation")
 	public EarthBlast(LivingEntity entity, Location target) {
 		this.entity = entity;
-		origin = entity.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().getBlock().getRelative(GeneralMethods.getCardinalDirection(entity.getLocation().getDirection())).getLocation();
+		origin = entity.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().getBlock().getRelative(GeneralMethods.getCardinalDirection(entity.getLocation().getDirection())).getLocation().add(0.5, 0, 0.5);
 		if (!EarthMethods.isEarthbendable(origin.getBlock().getType())) {
 			return;
 		}
