@@ -67,10 +67,6 @@ public class EntityManager {
 							new EarthBlast(entity, target.getLocation());
 							break;
 						case 2:
-							if (!water) break;
-							new WaterBlast(entity, target.getLocation());
-							break;
-						case 3:
 							if (!fire) break;
 							switch (GeneralMethods.rand.nextInt(2)) {
 								case 0:
@@ -80,6 +76,10 @@ public class EntityManager {
 									new FireJet(entity, target.getLocation());
 									break;
 							}
+							break;
+						case 3:
+							if (!water) break;
+							new WaterBlast(entity, target.getLocation());
 							break;
 						case 4:
 							switch (GeneralMethods.rand.nextInt(4)) {
@@ -92,10 +92,6 @@ public class EntityManager {
 									new EarthBlast(entity, target.getLocation());
 									break;
 								case 2:
-									if (!water) break;
-									new WaterBlast(entity, target.getLocation());
-									break;
-								case 3:
 									if (!fire) break;
 									switch (GeneralMethods.rand.nextInt(2)) {
 										case 0:
@@ -105,6 +101,10 @@ public class EntityManager {
 											new FireJet(entity, target.getLocation());
 											break;
 									}
+									break;
+								case 3:
+									if (!water) break;
+									new WaterBlast(entity, target.getLocation());
 									break;
 						}
 					}
