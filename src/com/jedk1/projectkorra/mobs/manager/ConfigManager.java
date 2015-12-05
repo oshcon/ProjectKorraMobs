@@ -21,6 +21,7 @@ public class ConfigManager {
 
 		config.addDefault("Properties.BendFrequency", 150);
 		config.addDefault("Properties.Air.NoFallDamage", true);
+		config.addDefault("Properties.Avatar.Enabled", true);
 		
 		config.addDefault("Abilities.Air.Enabled", true);
 		config.addDefault("Abilities.Air.AirBlast.Knockback", 1.0);
