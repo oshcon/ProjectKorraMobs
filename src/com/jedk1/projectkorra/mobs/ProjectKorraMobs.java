@@ -5,9 +5,9 @@ import com.jedk1.projectkorra.mobs.ability.EarthBlast;
 import com.jedk1.projectkorra.mobs.ability.FireBlast;
 import com.jedk1.projectkorra.mobs.ability.FireJet;
 import com.jedk1.projectkorra.mobs.ability.WaterBlast;
+import com.jedk1.projectkorra.mobs.config.ConfigManager;
 import com.jedk1.projectkorra.mobs.listener.MobListener;
 import com.jedk1.projectkorra.mobs.manager.AbilityManager;
-import com.jedk1.projectkorra.mobs.manager.ConfigManager;
 import com.jedk1.projectkorra.mobs.manager.EntityManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +26,7 @@ public class ProjectKorraMobs extends JavaPlugin {
 		
 		new ConfigManager(this);
 		MobMethods.registerDisabledWorlds();
+		MobMethods.registerEntityTypes();
 		getServer().getPluginManager().registerEvents(new MobListener(this), this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new AbilityManager(),0L, 1L);
 	}
