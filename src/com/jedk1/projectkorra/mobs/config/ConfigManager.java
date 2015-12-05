@@ -1,8 +1,9 @@
-package com.jedk1.projectkorra.mobs.manager;
+package com.jedk1.projectkorra.mobs.config;
 
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.EntityType;
 
 public class ConfigManager {
 	
@@ -19,9 +20,14 @@ public class ConfigManager {
 
 		config.addDefault("Version", 1);
 
+		config.addDefault("Properties.EntityTypes", new String[] {
+				EntityType.ZOMBIE.toString(),
+				EntityType.PIG_ZOMBIE.toString()
+		});
 		config.addDefault("Properties.BendFrequency", 150);
 		config.addDefault("Properties.Air.NoFallDamage", true);
 		config.addDefault("Properties.Avatar.Enabled", true);
+		config.addDefault("Properties.Avatar.Frequency", 150);
 		
 		config.addDefault("Abilities.Air.Enabled", true);
 		config.addDefault("Abilities.Air.AirBlast.Knockback", 1.0);
