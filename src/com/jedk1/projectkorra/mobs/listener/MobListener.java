@@ -3,9 +3,9 @@ package com.jedk1.projectkorra.mobs.listener;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.manager.EntityManager;
+import com.projectkorra.projectkorra.event.BendingReloadEvent;
 
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,7 +31,7 @@ public class MobListener implements Listener {
 		}
 		if (event.getEntity() instanceof LivingEntity && event.getTarget() instanceof LivingEntity) {
 			LivingEntity entity = (LivingEntity) event.getEntity();
-			if (entity instanceof Zombie) {
+			if (MobMethods.canBend(entity.getType())) {
 				EntityManager.addEntity(entity, (LivingEntity) event.getTarget());
 			}
 		}
@@ -43,7 +43,7 @@ public class MobListener implements Listener {
 		if (MobMethods.isDisabledWorld(entity.getWorld())) {
 			return;
 		}
-		if (entity instanceof Zombie) {
+		if (MobMethods.canBend(entity.getType())) {
 			MobMethods.assignElement(entity);
 		}
 	}
@@ -52,8 +52,8 @@ public class MobListener implements Listener {
 	public void onEntityDamage(EntityDamageEvent event) {
 		if (event.getEntity() instanceof LivingEntity) {
 			LivingEntity entity = (LivingEntity) event.getEntity();
-			if (entity instanceof Zombie) {
-				if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 0 || entity.getMetadata("element").get(0).asInt() == 4)  && airFallDamage) {
+			if (MobMethods.canBend(entity.getType())) {
+				if ((MobMethods.isAirBender(entity) || MobMethods.isAvatar(entity))  && airFallDamage) {
 					if (event.getCause() == DamageCause.FALL) {
 						event.setCancelled(true);
 						return;
@@ -61,5 +61,12 @@ public class MobListener implements Listener {
 				}
 			}
 		}
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onPKReload(BendingReloadEvent event) {
+		ProjectKorraMobs.plugin.reloadConfig();
+		MobMethods.registerDisabledWorlds();
+		MobMethods.registerEntityTypes();
 	}
 }
