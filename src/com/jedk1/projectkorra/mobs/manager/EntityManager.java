@@ -12,7 +12,6 @@ import com.projectkorra.projectkorra.waterbending.Bloodbending;
 
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,9 +38,7 @@ public class EntityManager {
 			return;
 		}
 		entityarray.put(entity, target);
-		if (!entity.hasMetadata("element")) {
-			entity.setMetadata("element", new FixedMetadataValue(ProjectKorraMobs.plugin, GeneralMethods.rand.nextInt(4)));
-		}
+		MobMethods.assignElement(entity);
 	}
 
 	public static void removeEntity(LivingEntity entity) {
@@ -84,10 +81,32 @@ public class EntityManager {
 									break;
 							}
 							break;
-						default:
-							if (!fire) break;
-							new FireBlast(entity, target.getLocation());
-							break;
+						case 4:
+							switch (GeneralMethods.rand.nextInt(4)) {
+								case 0:
+									if (!air) break;
+									new AirBlast(entity, target.getLocation());
+									break;
+								case 1:
+									if (!earth) break;
+									new EarthBlast(entity, target.getLocation());
+									break;
+								case 2:
+									if (!water) break;
+									new WaterBlast(entity, target.getLocation());
+									break;
+								case 3:
+									if (!fire) break;
+									switch (GeneralMethods.rand.nextInt(2)) {
+										case 0:
+											new FireBlast(entity, target.getLocation());
+											break;
+										case 1:
+											new FireJet(entity, target.getLocation());
+											break;
+									}
+									break;
+						}
 					}
 				}
 			}
