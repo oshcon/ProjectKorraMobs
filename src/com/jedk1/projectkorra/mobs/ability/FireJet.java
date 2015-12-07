@@ -2,6 +2,7 @@ package com.jedk1.projectkorra.mobs.ability;
 
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.util.ParticleEffect;
+import com.projectkorra.projectkorra.waterbending.WaterMethods;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -42,6 +43,9 @@ public class FireJet {
 			return false;
 		}
 		if (entity.getLocation().distance(target) < 3) {
+			return false;
+		}
+		if (WaterMethods.isWater(entity.getLocation().getBlock())) {
 			return false;
 		}
 		entity.setVelocity(entity.getLocation().getDirection().multiply(speed));

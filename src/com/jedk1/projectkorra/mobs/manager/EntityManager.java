@@ -68,6 +68,7 @@ public class EntityManager {
 							break;
 						case 2:
 							if (!fire) break;
+							if (!MobMethods.canBend(entity)) break;
 							switch (GeneralMethods.rand.nextInt(2)) {
 								case 0:
 									new FireBlast(entity, target.getLocation());
@@ -79,6 +80,7 @@ public class EntityManager {
 							break;
 						case 3:
 							if (!water) break;
+							if (!MobMethods.canBend(entity)) break;
 							new WaterBlast(entity, target.getLocation());
 							break;
 						case 4:
@@ -93,6 +95,7 @@ public class EntityManager {
 									break;
 								case 2:
 									if (!fire) break;
+									if (!MobMethods.canBend(entity)) break;
 									switch (GeneralMethods.rand.nextInt(2)) {
 										case 0:
 											new FireBlast(entity, target.getLocation());
@@ -104,6 +107,7 @@ public class EntityManager {
 									break;
 								case 3:
 									if (!water) break;
+									if (!MobMethods.canBend(entity)) break;
 									new WaterBlast(entity, target.getLocation());
 									break;
 						}

@@ -1,5 +1,6 @@
 package com.jedk1.projectkorra.mobs;
 
+import com.projectkorra.projectkorra.BendingManager;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ProjectKorra;
 import com.projectkorra.projectkorra.earthbending.EarthMethods;
@@ -42,7 +43,7 @@ public class MobMethods {
 	 * @param entity
 	 * @return
 	 */
-	public static boolean isAirBender(LivingEntity entity) {
+	public static boolean isAirbender(LivingEntity entity) {
 		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 0)) {
 			return true;
 		}
@@ -54,7 +55,7 @@ public class MobMethods {
 	 * @param entity
 	 * @return
 	 */
-	public static boolean isEarthBender(LivingEntity entity) {
+	public static boolean isEarthbender(LivingEntity entity) {
 		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 1)) {
 			return true;
 		}
@@ -66,7 +67,7 @@ public class MobMethods {
 	 * @param entity
 	 * @return
 	 */
-	public static boolean isFireBender(LivingEntity entity) {
+	public static boolean isFirebender(LivingEntity entity) {
 		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 2)) {
 			return true;
 		}
@@ -78,7 +79,7 @@ public class MobMethods {
 	 * @param entity
 	 * @return
 	 */
-	public static boolean isWaterBender(LivingEntity entity) {
+	public static boolean isWaterbender(LivingEntity entity) {
 		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 3)) {
 			return true;
 		}
@@ -97,8 +98,28 @@ public class MobMethods {
 		return false;
 	}
 	
-	public static boolean canBend(EntityType type) {
+	/**
+	 * Returns true if the entity is enabled in the configuration.
+	 * @param type
+	 * @return
+	 */
+	public static boolean canEntityBend(EntityType type) {
 		return entityTypes.contains(type.toString());
+	}
+	
+	/**
+	 * Returns true if the entity can bend.
+	 * @param entity
+	 * @return
+	 */
+	public static boolean canBend(LivingEntity entity) {
+		if (BendingManager.events.get(entity.getWorld()) != null && BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("SolarEclipse") && isFirebender(entity)) {
+			return false;
+		}
+		if (BendingManager.events.get(entity.getWorld()) != null && BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("LunarEclipse") && isWaterbender(entity)) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**

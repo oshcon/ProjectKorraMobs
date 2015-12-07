@@ -5,6 +5,7 @@ import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.manager.EntityManager;
 import com.projectkorra.projectkorra.event.BendingReloadEvent;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,6 +20,7 @@ public class MobListener implements Listener {
 	ProjectKorraMobs plugin;
 
 	public static boolean airFallDamage = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.Air.NoFallDamage");
+	public static boolean villagerFightBack = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.Entity.Villager.FightBack");
 	
 	public MobListener(ProjectKorraMobs plugin) {
 		this.plugin = plugin;
@@ -31,8 +33,11 @@ public class MobListener implements Listener {
 		}
 		if (event.getEntity() instanceof LivingEntity && event.getTarget() instanceof LivingEntity) {
 			LivingEntity entity = (LivingEntity) event.getEntity();
-			if (MobMethods.canBend(entity.getType())) {
+			if (MobMethods.canEntityBend(entity.getType())) {
 				EntityManager.addEntity(entity, (LivingEntity) event.getTarget());
+				if (event.getTarget().getType().equals(EntityType.VILLAGER) && villagerFightBack) {
+					EntityManager.addEntity((LivingEntity) event.getTarget(), entity);
+				}
 			}
 		}
 	}
@@ -43,7 +48,7 @@ public class MobListener implements Listener {
 		if (MobMethods.isDisabledWorld(entity.getWorld())) {
 			return;
 		}
-		if (MobMethods.canBend(entity.getType())) {
+		if (MobMethods.canEntityBend(entity.getType())) {
 			MobMethods.assignElement(entity);
 		}
 	}
@@ -52,8 +57,8 @@ public class MobListener implements Listener {
 	public void onEntityDamage(EntityDamageEvent event) {
 		if (event.getEntity() instanceof LivingEntity) {
 			LivingEntity entity = (LivingEntity) event.getEntity();
-			if (MobMethods.canBend(entity.getType())) {
-				if ((MobMethods.isAirBender(entity) || MobMethods.isAvatar(entity))  && airFallDamage) {
+			if (MobMethods.canEntityBend(entity.getType())) {
+				if ((MobMethods.isAirbender(entity) || MobMethods.isAvatar(entity))  && airFallDamage) {
 					if (event.getCause() == DamageCause.FALL) {
 						event.setCancelled(true);
 						return;
