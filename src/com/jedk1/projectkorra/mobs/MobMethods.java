@@ -1,12 +1,17 @@
 package com.jedk1.projectkorra.mobs;
 
+import com.jedk1.projectkorra.mobs.object.Element;
+import com.jedk1.projectkorra.mobs.object.SubElement;
 import com.projectkorra.projectkorra.BendingManager;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ProjectKorra;
 import com.projectkorra.projectkorra.earthbending.EarthMethods;
+import com.projectkorra.projectkorra.waterbending.WaterMethods;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -20,12 +25,19 @@ public class MobMethods {
 	
 	private static boolean avatar = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.Avatar.Enabled");
 	private static int avatarFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.Avatar.Frequency");
+	private static boolean subelements = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.SubElements.Enabled");
+	private static int metalFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Earth.Lava.Frequency");
+	private static int lavaFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Earth.Metal.Frequency");
+	private static int combustionFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.Combustion.Frequency");
+	private static int lightningFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.Lightning.Frequency");
+	private static int iceFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Water.Ice.Frequency");
 	
 	public static List<String> disabledWorlds = new ArrayList<String>();
 	public static List<String> entityTypes = new ArrayList<String>();
 
 	/**
 	 * Assigns a random element to an entity.
+	 * Also assigns a random subelement if enabled.
 	 * @param entity
 	 */
 	public static void assignElement(Entity entity) {
@@ -34,56 +46,51 @@ public class MobMethods {
 			i = 4;
 		}
 		if (!entity.hasMetadata("element")) {
-			entity.setMetadata("element", new FixedMetadataValue(ProjectKorra.plugin, i));
+			entity.setMetadata("element", new FixedMetadataValue(ProjectKorraMobs.plugin, i));
+			if (subelements) {
+				if (!entity.hasMetadata("subelement")) {
+					switch (getElement((LivingEntity) entity)) {
+						case Air:
+							break;
+						case Earth:
+							switch (GeneralMethods.rand.nextInt(2)) {
+								case 0:
+									if (GeneralMethods.rand.nextInt(lavaFrequency) == 0) {
+										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Lava.ordinal()));
+									}
+									break;
+								case 1:
+									if (GeneralMethods.rand.nextInt(metalFrequency) == 0) {
+										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Metal.ordinal()));
+									}
+									break;
+							}
+							break;
+						case Fire:
+							switch (GeneralMethods.rand.nextInt(2)) {
+								case 0:
+									if (GeneralMethods.rand.nextInt(combustionFrequency) == 0) {
+										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Combustion.ordinal()));
+									}
+									break;
+								case 1:
+									if (GeneralMethods.rand.nextInt(lightningFrequency) == 0) {
+										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Lightning.ordinal()));
+									}
+									break;
+							}
+							break;
+						case Water:
+							if (GeneralMethods.rand.nextInt(iceFrequency) == 0) {
+								entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Ice.ordinal()));
+							}
+							break;
+						default:
+							break;
+					}
+				}
+			}
 		}
-	}
-	
-	/**
-	 * Returns true if the entity is an Air Bender.
-	 * @param entity
-	 * @return
-	 */
-	public static boolean isAirbender(LivingEntity entity) {
-		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 0)) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Returns true if the entity is an Earth Bender.
-	 * @param entity
-	 * @return
-	 */
-	public static boolean isEarthbender(LivingEntity entity) {
-		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 1)) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Returns true if the entity is a Fire Bender.
-	 * @param entity
-	 * @return
-	 */
-	public static boolean isFirebender(LivingEntity entity) {
-		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 2)) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Returns true if the entity is a Water Bender.
-	 * @param entity
-	 * @return
-	 */
-	public static boolean isWaterbender(LivingEntity entity) {
-		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 3)) {
-			return true;
-		}
-		return false;
 	}
 	
 	/**
@@ -96,6 +103,54 @@ public class MobMethods {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns true if the entity has an element.
+	 * @param entity
+	 * @return
+	 */
+	public static boolean hasElement(LivingEntity entity) {
+		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns the entity's element.
+	 * @param entity
+	 * @return
+	 */
+	public static Element getElement(LivingEntity entity) {
+		if ((entity.hasMetadata("element") && entity.getMetadata("element").size() > 0)) {
+			return Element.getType(entity.getMetadata("element").get(0).asInt());
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns true if the entity has a subelement.
+	 * @param entity
+	 * @return
+	 */
+	public static boolean hasSubElement(LivingEntity entity) {
+		if (entity.hasMetadata("subelement") && entity.getMetadata("subelement").size() > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns the entity's subelement.
+	 * @param entity
+	 * @return
+	 */
+	public static SubElement getSubElement(LivingEntity entity) {
+		if ((entity.hasMetadata("subelement") && entity.getMetadata("subelement").size() > 0)) {
+			return SubElement.getType(entity.getMetadata("subelement").get(0).asInt());
+		}
+		return null;
 	}
 	
 	/**
@@ -113,11 +168,14 @@ public class MobMethods {
 	 * @return
 	 */
 	public static boolean canBend(LivingEntity entity) {
-		if (BendingManager.events.get(entity.getWorld()) != null && BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("SolarEclipse") && isFirebender(entity)) {
-			return false;
-		}
-		if (BendingManager.events.get(entity.getWorld()) != null && BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("LunarEclipse") && isWaterbender(entity)) {
-			return false;
+		if (!hasElement(entity)) return false;
+		if (BendingManager.events.get(entity.getWorld()) != null) {
+			if (BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("SolarEclipse") && getElement(entity).isFirebender()) {
+				return false;
+			}
+			if (BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("LunarEclipse") && getElement(entity).isWaterbender()) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -133,6 +191,62 @@ public class MobMethods {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Returns a random block for an element or subelement.
+	 * @param location
+	 * @param radius
+	 * @param element
+	 * @param sub
+	 * @return
+	 */
+	public static Block getRandomSourceBlock(Location location, int radius, Element element, SubElement sub) {
+	    List<Integer> checked = new ArrayList<Integer>();
+	    List<Block> blocks = GeneralMethods.getBlocksAroundPoint(location, radius);
+	    for (int i = 0; i < blocks.size(); i++) {
+	        int index = GeneralMethods.rand.nextInt(blocks.size());
+	        while (checked.contains(index)) {
+	            index = GeneralMethods.rand.nextInt(blocks.size());
+	        }
+	        checked.add(index);
+	        Block block = blocks.get(index);
+	        if (block == null || block.getLocation().distance(location) < 2) {
+	        	continue;
+	        }
+	        if (sub != null) {
+	        	switch (sub) {
+	        		case Lava:
+	        			if (EarthMethods.isLava(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+	        				return block;
+	        			}
+	        		case Metal:
+	        			if (EarthMethods.isMetal(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+	        				return block;
+	        			}
+	        		case Ice:
+	        			if (WaterMethods.isIcebendable(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+	        				return block;
+	        			}
+	        		default:
+	        			break;
+	        	}
+	        } else {
+	        	switch (element) {
+	        		case Earth:
+	        			if (EarthMethods.isEarthbendable(block.getType()) && isTransparent(block.getRelative(BlockFace.UP))) {
+	        	            return block;
+	        	        }
+	        		case Water:
+	        			if (WaterMethods.isWater(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+	        	            return block;
+	        	        }
+	        		default:
+	        			break;
+	        	}
+	        }
+	    }
+	    return null;
 	}
 	
 	/**
