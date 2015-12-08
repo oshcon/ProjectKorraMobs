@@ -43,7 +43,7 @@ public class FireJet {
 		if (System.currentTimeMillis() > time) {
 			return false;
 		}
-		if (entity.getLocation().distance(target) < 2) {
+		if (entity.getLocation().distance(target) < 3) {
 			return false;
 		}
 		if (WaterMethods.isWater(entity.getLocation().getBlock())) {
