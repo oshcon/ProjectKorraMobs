@@ -1,10 +1,9 @@
 package com.jedk1.projectkorra.mobs;
 
-import com.jedk1.projectkorra.mobs.ability.AirBlast;
-import com.jedk1.projectkorra.mobs.ability.EarthBlast;
-import com.jedk1.projectkorra.mobs.ability.FireBlast;
-import com.jedk1.projectkorra.mobs.ability.FireJet;
-import com.jedk1.projectkorra.mobs.ability.WaterBlast;
+import com.jedk1.projectkorra.mobs.ability.air.AirAbility;
+import com.jedk1.projectkorra.mobs.ability.earth.EarthAbility;
+import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
+import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
 import com.jedk1.projectkorra.mobs.config.ConfigManager;
 import com.jedk1.projectkorra.mobs.listener.MobListener;
 import com.jedk1.projectkorra.mobs.manager.AbilityManager;
@@ -33,11 +32,10 @@ public class ProjectKorraMobs extends JavaPlugin {
 	
 	@Override
 	public void onDisable(){
-		FireBlast.removeAll();
-		AirBlast.removeAll();
-		WaterBlast.removeAll();
-		EarthBlast.removeAll();
-		FireJet.removeAll();
+		AirAbility.remove();
+		EarthAbility.remove();
+		FireAbility.remove();
+		WaterAbility.remove();
 		EntityManager.remove();
 	}
 }
