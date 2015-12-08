@@ -11,7 +11,7 @@ public class FireAbility {
 	private static boolean fire = ProjectKorraMobs.plugin.getConfig().getBoolean("Abilities.Fire.Enabled");
 	private static boolean lightning = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.SubElements.Fire.Lightning.Enabled");
 	private static boolean combustion = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.SubElements.Fire.Combustion.Enabled");
-	private static int frequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.Frequency");
+	private static int frequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.AbilityFrequency");
 
 	public static void execute(LivingEntity entity, LivingEntity target) {
 		if (!fire) return;

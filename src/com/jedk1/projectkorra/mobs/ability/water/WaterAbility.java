@@ -11,7 +11,7 @@ public class WaterAbility {
 
 	private static boolean water = ProjectKorraMobs.plugin.getConfig().getBoolean("Abilities.Water.Enabled");
 	private static boolean ice = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.SubElements.Water.Ice.Enabled");
-	private static int frequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Water.Frequency");
+	private static int frequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Water.AbilityFrequency");
 	
 	public static void execute(LivingEntity entity, LivingEntity target) {
 		if (!water) return;

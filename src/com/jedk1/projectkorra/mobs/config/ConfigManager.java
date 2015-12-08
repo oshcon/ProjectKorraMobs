@@ -32,19 +32,19 @@ public class ConfigManager {
 		config.addDefault("Properties.Avatar.Frequency", 150);
 		config.addDefault("Properties.Entity.Villager.FightBack", true);
 		config.addDefault("Properties.SubElements.Enabled", true);
-		config.addDefault("Properties.SubElements.Earth.Frequency", 10);
+		config.addDefault("Properties.SubElements.Earth.AbilityFrequency", 5);
 		config.addDefault("Properties.SubElements.Earth.Lava.Enabled", true);
-		config.addDefault("Properties.SubElements.Earth.Lava.Frequency", 15);
+		config.addDefault("Properties.SubElements.Earth.Lava.Frequency", 8);
 		config.addDefault("Properties.SubElements.Earth.Metal.Enabled", true);
-		config.addDefault("Properties.SubElements.Earth.Metal.Frequency", 10);
-		config.addDefault("Properties.SubElements.Fire.Frequency", 10);
+		config.addDefault("Properties.SubElements.Earth.Metal.Frequency", 5);
+		config.addDefault("Properties.SubElements.Fire.AbilityFrequency", 5);
 		config.addDefault("Properties.SubElements.Fire.Combustion.Enabled", true);
-		config.addDefault("Properties.SubElements.Fire.Combustion.Frequency", 15);
+		config.addDefault("Properties.SubElements.Fire.Combustion.Frequency", 6);
 		config.addDefault("Properties.SubElements.Fire.Lightning.Enabled", true);
-		config.addDefault("Properties.SubElements.Fire.Lightning.Frequency", 10);
-		config.addDefault("Properties.SubElements.Water.Frequency", 4);
+		config.addDefault("Properties.SubElements.Fire.Lightning.Frequency", 9);
+		config.addDefault("Properties.SubElements.Water.AbilityFrequency", 3);
 		config.addDefault("Properties.SubElements.Water.Ice.Enabled", true);
-		config.addDefault("Properties.SubElements.Water.Ice.Frequency", 4);
+		config.addDefault("Properties.SubElements.Water.Ice.Frequency", 2);
 		
 		config.addDefault("Abilities.Air.Enabled", true);
 		config.addDefault("Abilities.Air.AirBlast.Knockback", 1.0);
