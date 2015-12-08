@@ -2,11 +2,12 @@ package com.jedk1.projectkorra.mobs.manager;
 
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-import com.jedk1.projectkorra.mobs.ability.AirBlast;
-import com.jedk1.projectkorra.mobs.ability.EarthBlast;
-import com.jedk1.projectkorra.mobs.ability.FireBlast;
-import com.jedk1.projectkorra.mobs.ability.FireJet;
-import com.jedk1.projectkorra.mobs.ability.WaterBlast;
+import com.jedk1.projectkorra.mobs.ability.AvatarAbility;
+import com.jedk1.projectkorra.mobs.ability.air.AirAbility;
+import com.jedk1.projectkorra.mobs.ability.earth.EarthAbility;
+import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
+import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
+import com.jedk1.projectkorra.mobs.object.Element;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.waterbending.Bloodbending;
 
@@ -19,10 +20,6 @@ public class EntityManager {
 
 	public static ConcurrentHashMap<LivingEntity, LivingEntity> entityarray = new ConcurrentHashMap<LivingEntity, LivingEntity>();
 
-	private static boolean air = ProjectKorraMobs.plugin.getConfig().getBoolean("Abilities.Air.Enabled");
-	private static boolean fire = ProjectKorraMobs.plugin.getConfig().getBoolean("Abilities.Fire.Enabled");
-	private static boolean water = ProjectKorraMobs.plugin.getConfig().getBoolean("Abilities.Water.Enabled");
-	private static boolean earth = ProjectKorraMobs.plugin.getConfig().getBoolean("Abilities.Earth.Enabled");
 	private static int chance = ProjectKorraMobs.plugin.getConfig().getInt("Properties.BendFrequency");
 
 	public EntityManager() {
@@ -57,60 +54,22 @@ public class EntityManager {
 			}
 			if (entity.getMetadata("element").size() > 0) {
 				if (GeneralMethods.rand.nextInt(chance) == 0) {
-					switch(entity.getMetadata("element").get(0).asInt()) {
-						case 0:
-							if (!air) break;
-							new AirBlast(entity, target.getLocation());
+					switch(Element.getType(entity.getMetadata("element").get(0).asInt())) {
+						case Air:
+							AirAbility.execute(entity, target);
 							break;
-						case 1:
-							if (!earth) break;
-							new EarthBlast(entity, target.getLocation());
+						case Earth:
+							EarthAbility.execute(entity, target);
 							break;
-						case 2:
-							if (!fire) break;
-							if (!MobMethods.canBend(entity)) break;
-							switch (GeneralMethods.rand.nextInt(2)) {
-								case 0:
-									new FireBlast(entity, target.getLocation());
-									break;
-								case 1:
-									new FireJet(entity, target.getLocation());
-									break;
-							}
+						case Fire:
+							FireAbility.execute(entity, target);
 							break;
-						case 3:
-							if (!water) break;
-							if (!MobMethods.canBend(entity)) break;
-							new WaterBlast(entity, target.getLocation());
+						case Water:
+							WaterAbility.execute(entity, target);
 							break;
-						case 4:
-							switch (GeneralMethods.rand.nextInt(4)) {
-								case 0:
-									if (!air) break;
-									new AirBlast(entity, target.getLocation());
-									break;
-								case 1:
-									if (!earth) break;
-									new EarthBlast(entity, target.getLocation());
-									break;
-								case 2:
-									if (!fire) break;
-									if (!MobMethods.canBend(entity)) break;
-									switch (GeneralMethods.rand.nextInt(2)) {
-										case 0:
-											new FireBlast(entity, target.getLocation());
-											break;
-										case 1:
-											new FireJet(entity, target.getLocation());
-											break;
-									}
-									break;
-								case 3:
-									if (!water) break;
-									if (!MobMethods.canBend(entity)) break;
-									new WaterBlast(entity, target.getLocation());
-									break;
-						}
+						case Avatar:
+							AvatarAbility.execute(entity, target);
+							break;
 					}
 				}
 			}
