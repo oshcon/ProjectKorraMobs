@@ -53,6 +53,9 @@ public class Combustion {
 		if (entity == null || target == null) {
 			return false;
 		}
+		if (entity.getWorld() != head.getWorld()) {
+			return false;
+		}
 		if (origin.distance(head) > 20) {
 			explosion(head);
 			return false;

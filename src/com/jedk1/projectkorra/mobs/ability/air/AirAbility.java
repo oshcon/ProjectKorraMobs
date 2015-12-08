@@ -13,6 +13,7 @@ public class AirAbility {
 	public static void execute(LivingEntity entity, LivingEntity target) {
 		if (!air) return;
 		if (!MobMethods.canBend(entity)) return;
+		if (entity.getWorld() != target.getWorld()) return;
 		if (entity.getLocation().distance(target.getLocation()) > 20) {
 			new AirScooter(entity, target.getLocation());
 			return;

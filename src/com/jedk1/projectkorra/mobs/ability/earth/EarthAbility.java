@@ -17,6 +17,7 @@ public class EarthAbility {
 	public static void execute(LivingEntity entity, LivingEntity target) {
 		if (!earth) return;
 		if (!MobMethods.canBend(entity)) return;
+		if (entity.getWorld() != target.getWorld()) return;
 		if (GeneralMethods.rand.nextInt(frequency) == 0 && MobMethods.hasSubElement(entity)) {
 			switch (MobMethods.getSubElement(entity)) {
 				case Lava:

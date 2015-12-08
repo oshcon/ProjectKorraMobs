@@ -16,6 +16,7 @@ public class WaterAbility {
 	public static void execute(LivingEntity entity, LivingEntity target) {
 		if (!water) return;
 		if (!MobMethods.canBend(entity)) return;
+		if (entity.getWorld() != target.getWorld()) return;
 		if (GeneralMethods.rand.nextInt(frequency) == 0 && MobMethods.hasSubElement(entity)) {
 			switch (MobMethods.getSubElement(entity)) {
 				case Ice:

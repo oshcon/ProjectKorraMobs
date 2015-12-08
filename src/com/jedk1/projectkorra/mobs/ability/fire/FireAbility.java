@@ -16,6 +16,7 @@ public class FireAbility {
 	public static void execute(LivingEntity entity, LivingEntity target) {
 		if (!fire) return;
 		if (!MobMethods.canBend(entity)) return;
+		if (entity.getWorld() != target.getWorld()) return;
 		if (entity.getLocation().distance(target.getLocation()) > 20) {
 			new FireJet(entity, target.getLocation());
 			return;

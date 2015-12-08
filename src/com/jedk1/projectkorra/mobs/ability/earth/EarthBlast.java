@@ -68,6 +68,9 @@ public class EarthBlast {
 		if (entity == null) {
 			return false;
 		}
+		if (entity.getWorld() != head.getWorld()) {
+			return false;
+		}
 		if (origin.distance(head) > 20) {
 			return false;
 		}

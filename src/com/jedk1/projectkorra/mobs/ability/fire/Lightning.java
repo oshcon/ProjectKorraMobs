@@ -32,7 +32,7 @@ public class Lightning {
 	
 	private void spawnBolt(LivingEntity entity, Location location, double max, double gap, int arc){
 		id = ID;
-		bolts.put(id, new Bolt(entity, location, id, max, gap, arc));
+		bolts.put(id, new Bolt(entity, location, max, gap, arc));
 		if (ID == Integer.MAX_VALUE)
 			ID = Integer.MIN_VALUE;
 		ID++;
@@ -47,13 +47,11 @@ public class Lightning {
 		private double step;
 		private double max;
 		private double gap;
-		private int id;
 		private int arc;
 
-		public Bolt(LivingEntity entity, Location location, int id, double max, double gap, int arc) {
+		public Bolt(LivingEntity entity, Location location, double max, double gap, int arc) {
 			this.entity = entity;
 			this.location = location;
-			this.id = id;
 			this.max = max;
 			this.arc = arc;
 			this.gap = gap;
