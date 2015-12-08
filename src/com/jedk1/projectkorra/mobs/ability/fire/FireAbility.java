@@ -11,12 +11,16 @@ public class FireAbility {
 	private static boolean fire = ProjectKorraMobs.plugin.getConfig().getBoolean("Abilities.Fire.Enabled");
 	private static boolean lightning = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.SubElements.Fire.Lightning.Enabled");
 	private static boolean combustion = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.SubElements.Fire.Combustion.Enabled");
-	
+	private static int frequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.Frequency");
+
 	public static void execute(LivingEntity entity, LivingEntity target) {
 		if (!fire) return;
 		if (!MobMethods.canBend(entity)) return;
-		int i = GeneralMethods.rand.nextInt(2);
-		if (MobMethods.hasSubElement(entity) && i == 0) {
+		if (entity.getLocation().distance(target.getLocation()) > 20) {
+			new FireJet(entity, target.getLocation());
+			return;
+		}
+		if (GeneralMethods.rand.nextInt(frequency) == 0 && MobMethods.hasSubElement(entity)) {
 			switch (MobMethods.getSubElement(entity)) {
 				case Lightning:
 					if (lightning) {
@@ -24,16 +28,13 @@ public class FireAbility {
 					}
 				case Combustion:
 					if (combustion) {
+						new Combustion(entity, target);
 						return;
 					}
 				default:
 					break;
 			}
 		} else {
-			if (entity.getLocation().distance(target.getLocation()) > 20) {
-				new FireJet(entity, target.getLocation());
-				return;
-			}
 			switch (GeneralMethods.rand.nextInt(2)) {
 				case 0:
 					new FireBlast(entity, target.getLocation());
@@ -44,13 +45,15 @@ public class FireAbility {
 			}
 		}
 	}
-	
+
 	public static void progress() {
+		Combustion.progressAll();
 		FireBlast.progressAll();
 		FireJet.progressAll();
 	}
-	
+
 	public static void remove() {
+		Combustion.removeAll();
 		FireBlast.removeAll();
 		FireJet.removeAll();
 	}
