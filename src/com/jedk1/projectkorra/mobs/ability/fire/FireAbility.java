@@ -24,6 +24,7 @@ public class FireAbility {
 			switch (MobMethods.getSubElement(entity)) {
 				case Lightning:
 					if (lightning) {
+						new Lightning(entity, target.getLocation());
 						return;
 					}
 				case Combustion:
@@ -50,11 +51,13 @@ public class FireAbility {
 		Combustion.progressAll();
 		FireBlast.progressAll();
 		FireJet.progressAll();
+		Lightning.progressAll();
 	}
 
 	public static void remove() {
 		Combustion.removeAll();
 		FireBlast.removeAll();
 		FireJet.removeAll();
+		Lightning.removeAll();
 	}
 }

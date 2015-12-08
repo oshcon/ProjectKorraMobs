@@ -63,6 +63,7 @@ public class ConfigManager {
 		config.addDefault("Abilities.Fire.FireJet.Speed", 0.8);
 		config.addDefault("Abilities.Fire.Combustion.Damage", 6.0);
 		config.addDefault("Abilities.Fire.Combustion.FireTick", 2000);
+		config.addDefault("Abilities.Fire.Lightning.Damage", 7.0);
 		
 		config.addDefault("Abilities.Water.Enabled", true);
 		config.addDefault("Abilities.Water.WaterBlast.Damage", 3.0);
