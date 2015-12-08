@@ -58,7 +58,7 @@ public class MobListener implements Listener {
 		if (event.getEntity() instanceof LivingEntity) {
 			LivingEntity entity = (LivingEntity) event.getEntity();
 			if (MobMethods.canEntityBend(entity.getType())) {
-				if ((MobMethods.isAirbender(entity) || MobMethods.isAvatar(entity))  && airFallDamage) {
+				if (((MobMethods.getElement(entity) != null && MobMethods.getElement(entity).isAirbender()) || MobMethods.isAvatar(entity))  && airFallDamage) {
 					if (event.getCause() == DamageCause.FALL) {
 						event.setCancelled(true);
 						return;
