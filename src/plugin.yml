@@ -1,5 +1,5 @@
 name: ProjectKorraMobs
-version: 1.0.3
+version: 1.0.4
 main: com.jedk1.projectkorra.mobs.ProjectKorraMobs
 authors: ['jedk1']
 depend: ['ProjectKorra']
