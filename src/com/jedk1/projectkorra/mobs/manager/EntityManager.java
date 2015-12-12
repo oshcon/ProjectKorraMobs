@@ -48,7 +48,7 @@ public class EntityManager {
 		for (LivingEntity entity : entityarray.keySet()) {
 			Creature e = (Creature) entity;
 			LivingEntity target = entityarray.get(entity);
-			if (e == null || e.isDead() || target == null || target.isDead() || e.getTarget() == null || Bloodbending.isBloodbended(entity) || !entity.hasMetadata("element")) {
+			if (e == null || e.isDead() || target == null || target.isDead() || e.getTarget() == null || Bloodbending.isBloodbended(entity) || !MobMethods.hasElement(entity)) {
 				entityarray.remove(entity);
 				continue;
 			}
