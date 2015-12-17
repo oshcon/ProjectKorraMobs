@@ -4,6 +4,7 @@ import com.jedk1.projectkorra.mobs.ability.air.AirAbility;
 import com.jedk1.projectkorra.mobs.ability.earth.EarthAbility;
 import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
 import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
+import com.jedk1.projectkorra.mobs.command.Commands;
 import com.jedk1.projectkorra.mobs.config.ConfigManager;
 import com.jedk1.projectkorra.mobs.listener.MobListener;
 import com.jedk1.projectkorra.mobs.manager.AbilityManager;
@@ -24,6 +25,7 @@ public class ProjectKorraMobs extends JavaPlugin {
 		ProjectKorraMobs.log = this.getLogger();
 		
 		new ConfigManager(this);
+		new Commands(this);
 		MobMethods.registerDisabledWorlds();
 		MobMethods.registerEntityTypes();
 		getServer().getPluginManager().registerEvents(new MobListener(this), this);

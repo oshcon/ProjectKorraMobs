@@ -3,3 +3,15 @@ version: 1.0.5
 main: com.jedk1.projectkorra.mobs.ProjectKorraMobs
 authors: ['jedk1']
 depend: ['ProjectKorra']
+
+commands:
+  projectkorramobs:
+    aliases: [pkm, bm, pkmobs, bendingmobs, bendmobs]
+    usage: /<command>
+    
+permissions:
+  bendingmobs.admin:
+    default: op
+    description: Grants access to all commands.
+    children:
+      projectkorramobs.command.spawn: true

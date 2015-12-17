@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -91,6 +92,44 @@ public class MobMethods {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Assigns an entity with provided element and subelement.
+	 * @param entity
+	 * @param element
+	 * @param sub
+	 */
+	public static boolean assignElement(Entity entity, Element element, SubElement sub) {
+		if (entity == null) return false;
+		if (element != null) {
+			entity.setMetadata("element", new FixedMetadataValue(ProjectKorraMobs.plugin, element.ordinal()));
+			if (sub == null) return true;
+		}
+		if (sub != null && sub.getElement().equals(element)) {
+			entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, sub.ordinal()));
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Spawns an entity with provided element and subelement.
+	 * @param location
+	 * @param type
+	 * @param element
+	 * @param sub
+	 */
+	public static boolean spawnEntity(Location location, EntityType type, Element element, SubElement sub) {
+		if (LivingEntity.class.isAssignableFrom(type.getEntityClass())) {
+			LivingEntity entity = (LivingEntity) location.getWorld().spawnEntity(location, type);
+			if (entity instanceof Ageable) {
+				((Ageable) entity).setAdult();
+			}
+			if (element == null && sub == null) return true;
+			return assignElement(entity, element, sub);
+		}
+		return false;
 	}
 	
 	/**
