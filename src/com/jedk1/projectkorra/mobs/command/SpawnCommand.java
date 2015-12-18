@@ -102,7 +102,7 @@ public class SpawnCommand extends MobCommand {
 				location = new Location(world, x, y, z);
 			} else if (args.size() >= 6) {
 				world = Bukkit.getWorld(args.get(5 + argoffset));
-				location = new Location(world, Double.parseDouble(args.get(2 + argoffset)), Double.parseDouble(args.get(3 + argoffset)), Double.parseDouble(args.get(4 + argoffset)));
+				location = new Location(world, Double.parseDouble(args.get(2 + argoffset).replace("~", "")), Double.parseDouble(args.get(3 + argoffset).replace("~", "")), Double.parseDouble(args.get(4 + argoffset).replace("~", "")));
 			}
 
 			if (world == null) {
