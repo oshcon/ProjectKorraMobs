@@ -80,7 +80,7 @@ public abstract class MobCommand implements SubCommand {
 	 * @return True if they have permission, false otherwise
 	 */
 	protected boolean hasPermission(CommandSender sender) {
-		if (sender.hasPermission("projectkorramobs.command." + name)) {
+		if (sender.hasPermission("bendingmobs.command." + name)) {
 			return true;
 		} else {
 			sender.sendMessage(ChatColor.RED + "You don't have permission to do that.");
@@ -98,7 +98,7 @@ public abstract class MobCommand implements SubCommand {
 	 * @return True if they have permission, false otherwise
 	 */
 	protected boolean hasPermission(CommandSender sender, String extra) {
-		if (sender.hasPermission("projectkorramobs.command." + name + "." + extra)) {
+		if (sender.hasPermission("bendingmobs.command." + name + "." + extra)) {
 			return true;
 		} else {
 			sender.sendMessage(ChatColor.RED + "You don't have permission to do that.");

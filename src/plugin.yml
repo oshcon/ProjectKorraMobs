@@ -14,4 +14,4 @@ permissions:
     default: op
     description: Grants access to all commands.
     children:
-      projectkorramobs.command.spawn: true
+      bendingmobs.command.spawn: true
