@@ -8,17 +8,19 @@ import com.jedk1.projectkorra.mobs.ability.earth.EarthAbility;
 import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
 import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
 import com.jedk1.projectkorra.mobs.object.Element;
+import com.jedk1.projectkorra.mobs.object.PKEntity;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.waterbending.Bloodbending;
 
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class EntityManager {
 
-	public static ConcurrentHashMap<LivingEntity, LivingEntity> entityarray = new ConcurrentHashMap<LivingEntity, LivingEntity>();
+	public static ConcurrentHashMap<UUID, PKEntity> entityarray = new ConcurrentHashMap<UUID, PKEntity>();
 
 	private static int chance = ProjectKorraMobs.plugin.getConfig().getInt("Properties.BendFrequency");
 
@@ -27,33 +29,46 @@ public class EntityManager {
 	}
 
 	public static void addEntity(LivingEntity entity, LivingEntity target) {
+		if (!(entity instanceof Creature)) {
+			return;
+		}
 		if (MobMethods.isDisabledWorld(entity.getWorld())) {
 			return;
 		}
-		if (entityarray.containsKey(entity)) {
-			entityarray.replace(entity, target);
+		if (entityarray.containsKey(entity.getUniqueId())) {
+			entityarray.get(entity.getUniqueId()).setTarget(target);
 			return;
 		}
-		entityarray.put(entity, target);
+		entityarray.put(entity.getUniqueId(), new PKEntity(entity, target));
 		MobMethods.assignElement(entity);
 	}
 
 	public static void removeEntity(LivingEntity entity) {
-		if (entityarray.containsKey(entity)) {
-			entityarray.remove(entity);
+		if (entityarray.containsKey(entity.getUniqueId())) {
+			entityarray.remove(entity.getUniqueId());
 		}
 	}
 
 	public static void progress() {
-		for (LivingEntity entity : entityarray.keySet()) {
+		for (UUID uuid : entityarray.keySet()) {
+			PKEntity pkentity = entityarray.get(uuid);
+			LivingEntity entity = pkentity.getEntity();
+			LivingEntity target = pkentity.getTarget();
 			Creature e = (Creature) entity;
-			LivingEntity target = entityarray.get(entity);
-			if (e == null || e.isDead() || target == null || target.isDead() || e.getTarget() == null || Bloodbending.isBloodbended(entity) || !MobMethods.hasElement(entity)) {
-				entityarray.remove(entity);
-				continue;
+			if (entity == null || entity.isDead() || e.getTarget() == null || e.getTarget().isDead() || Bloodbending.isBloodbended(entity) || !MobMethods.hasElement(entity)) {
+				entityarray.remove(uuid);
+				return;
 			}
+			if (target == null || target.isDead()) {
+				entityarray.remove(uuid);
+				return;
+			}
+			
 			if (entity.getMetadata("element").size() > 0) {
 				if (GeneralMethods.rand.nextInt(chance) == 0) {
+					if (!entity.hasLineOfSight(target)) {
+						return;
+					}
 					switch(Element.getType(entity.getMetadata("element").get(0).asInt())) {
 						case Air:
 							AirAbility.execute(entity, target);

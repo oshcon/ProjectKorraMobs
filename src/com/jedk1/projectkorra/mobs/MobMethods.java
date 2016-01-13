@@ -2,11 +2,11 @@ package com.jedk1.projectkorra.mobs;
 
 import com.jedk1.projectkorra.mobs.object.Element;
 import com.jedk1.projectkorra.mobs.object.SubElement;
-import com.projectkorra.projectkorra.BendingManager;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ProjectKorra;
 import com.projectkorra.projectkorra.earthbending.EarthMethods;
 import com.projectkorra.projectkorra.waterbending.WaterMethods;
+import com.projectkorra.rpg.event.EventManager;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MobMethods {
-	
+
 	private static boolean avatar = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.Avatar.Enabled");
 	private static int avatarFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.Avatar.Frequency");
 	private static boolean subelements = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.SubElements.Enabled");
@@ -32,7 +32,7 @@ public class MobMethods {
 	private static int combustionFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.Combustion.Frequency");
 	private static int lightningFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.Lightning.Frequency");
 	private static int iceFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Water.Ice.Frequency");
-	
+
 	public static List<String> disabledWorlds = new ArrayList<String>();
 	public static List<String> entityTypes = new ArrayList<String>();
 
@@ -93,7 +93,7 @@ public class MobMethods {
 			}
 		}
 	}
-	
+
 	/**
 	 * Assigns an entity with provided element and subelement.
 	 * @param entity
@@ -112,7 +112,7 @@ public class MobMethods {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Spawns an entity with provided element and subelement.
 	 * @param location
@@ -131,7 +131,7 @@ public class MobMethods {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if the entity is an Avatar.
 	 * @param entity
@@ -143,7 +143,7 @@ public class MobMethods {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if the entity has an element.
 	 * @param entity
@@ -155,7 +155,7 @@ public class MobMethods {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the entity's element.
 	 * @param entity
@@ -167,7 +167,7 @@ public class MobMethods {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns true if the entity has a subelement.
 	 * @param entity
@@ -179,7 +179,7 @@ public class MobMethods {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the entity's subelement.
 	 * @param entity
@@ -191,7 +191,7 @@ public class MobMethods {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns true if the entity is enabled in the configuration.
 	 * @param type
@@ -200,7 +200,7 @@ public class MobMethods {
 	public static boolean canEntityBend(EntityType type) {
 		return entityTypes.contains(type.toString());
 	}
-	
+
 	/**
 	 * Returns true if the entity can bend.
 	 * @param entity
@@ -208,17 +208,19 @@ public class MobMethods {
 	 */
 	public static boolean canBend(LivingEntity entity) {
 		if (!hasElement(entity)) return false;
-		if (BendingManager.events.get(entity.getWorld()) != null) {
-			if (BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("SolarEclipse") && getElement(entity).isFirebender()) {
-				return false;
-			}
-			if (BendingManager.events.get(entity.getWorld()).equalsIgnoreCase("LunarEclipse") && getElement(entity).isWaterbender()) {
-				return false;
+		if (GeneralMethods.hasRPG()) {
+			if (EventManager.marker.get(entity.getWorld()) != null) {
+				if (EventManager.marker.get(entity.getWorld()).equalsIgnoreCase("SolarEclipse") && getElement(entity).isFirebender()) {
+					return false;
+				}
+				if (EventManager.marker.get(entity.getWorld()).equalsIgnoreCase("LunarEclipse") && getElement(entity).isWaterbender()) {
+					return false;
+				}
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Checks if a block is transparent.
 	 * @param block
@@ -231,7 +233,7 @@ public class MobMethods {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns a random block for an element or subelement.
 	 * @param location
@@ -241,53 +243,53 @@ public class MobMethods {
 	 * @return
 	 */
 	public static Block getRandomSourceBlock(Location location, int radius, Element element, SubElement sub) {
-	    List<Integer> checked = new ArrayList<Integer>();
-	    List<Block> blocks = GeneralMethods.getBlocksAroundPoint(location, radius);
-	    for (int i = 0; i < blocks.size(); i++) {
-	        int index = GeneralMethods.rand.nextInt(blocks.size());
-	        while (checked.contains(index)) {
-	            index = GeneralMethods.rand.nextInt(blocks.size());
-	        }
-	        checked.add(index);
-	        Block block = blocks.get(index);
-	        if (block == null || block.getLocation().distance(location) < 2) {
-	        	continue;
-	        }
-	        if (sub != null) {
-	        	switch (sub) {
-	        		case Lava:
-	        			if (EarthMethods.isLava(block) && isTransparent(block.getRelative(BlockFace.UP))) {
-	        				return block;
-	        			}
-	        		case Metal:
-	        			if (EarthMethods.isMetal(block) && isTransparent(block.getRelative(BlockFace.UP))) {
-	        				return block;
-	        			}
-	        		case Ice:
-	        			if (WaterMethods.isIcebendable(block) && isTransparent(block.getRelative(BlockFace.UP))) {
-	        				return block;
-	        			}
-	        		default:
-	        			break;
-	        	}
-	        } else {
-	        	switch (element) {
-	        		case Earth:
-	        			if (EarthMethods.isEarthbendable(block.getType()) && isTransparent(block.getRelative(BlockFace.UP))) {
-	        	            return block;
-	        	        }
-	        		case Water:
-	        			if (WaterMethods.isWater(block) && isTransparent(block.getRelative(BlockFace.UP))) {
-	        	            return block;
-	        	        }
-	        		default:
-	        			break;
-	        	}
-	        }
-	    }
-	    return null;
+		List<Integer> checked = new ArrayList<Integer>();
+		List<Block> blocks = GeneralMethods.getBlocksAroundPoint(location, radius);
+		for (int i = 0; i < blocks.size(); i++) {
+			int index = GeneralMethods.rand.nextInt(blocks.size());
+			while (checked.contains(index)) {
+				index = GeneralMethods.rand.nextInt(blocks.size());
+			}
+			checked.add(index);
+			Block block = blocks.get(index);
+			if (block == null || block.getLocation().distance(location) < 2) {
+				continue;
+			}
+			if (sub != null) {
+				switch (sub) {
+					case Lava:
+						if (EarthMethods.isLava(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+							return block;
+						}
+					case Metal:
+						if (EarthMethods.isMetal(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+							return block;
+						}
+					case Ice:
+						if (WaterMethods.isIcebendable(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+							return block;
+						}
+					default:
+						break;
+				}
+			} else {
+				switch (element) {
+					case Earth:
+						if (EarthMethods.isEarthbendable(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+							return block;
+						}
+					case Water:
+						if (WaterMethods.isWater(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+							return block;
+						}
+					default:
+						break;
+				}
+			}
+		}
+		return null;
 	}
-	
+
 	/**
 	 * Checks if a world is disabled in the PK configuration.
 	 * @param world
@@ -299,7 +301,7 @@ public class MobMethods {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Registers disabled worlds on plugin load.
 	 */
@@ -311,7 +313,7 @@ public class MobMethods {
 			}
 		}
 	}
-	
+
 	/**
 	 * Registers entity types that can bend.
 	 */
