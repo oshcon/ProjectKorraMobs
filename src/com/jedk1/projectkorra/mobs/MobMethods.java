@@ -4,9 +4,10 @@ import com.jedk1.projectkorra.mobs.object.Element;
 import com.jedk1.projectkorra.mobs.object.SubElement;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ProjectKorra;
-import com.projectkorra.projectkorra.earthbending.EarthMethods;
-import com.projectkorra.projectkorra.waterbending.WaterMethods;
-import com.projectkorra.rpg.event.EventManager;
+import com.projectkorra.projectkorra.ability.EarthAbility;
+import com.projectkorra.projectkorra.ability.ElementalAbility;
+import com.projectkorra.projectkorra.ability.FireAbility;
+import com.projectkorra.projectkorra.ability.WaterAbility;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -21,6 +22,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class MobMethods {
 
@@ -36,14 +38,16 @@ public class MobMethods {
 	public static List<String> disabledWorlds = new ArrayList<String>();
 	public static List<String> entityTypes = new ArrayList<String>();
 
+	public static Random rand = new Random();
+
 	/**
 	 * Assigns a random element to an entity.
 	 * Also assigns a random subelement if enabled.
 	 * @param entity
 	 */
 	public static void assignElement(Entity entity) {
-		int i = GeneralMethods.rand.nextInt(4);
-		if (avatar && GeneralMethods.rand.nextInt(avatarFrequency) == 0) {
+		int i = rand.nextInt(4);
+		if (avatar && rand.nextInt(avatarFrequency) == 0) {
 			i = 4;
 		}
 		if (!entity.hasMetadata("element")) {
@@ -54,35 +58,35 @@ public class MobMethods {
 						case Air:
 							break;
 						case Earth:
-							switch (GeneralMethods.rand.nextInt(2)) {
+							switch (rand.nextInt(2)) {
 								case 0:
-									if (GeneralMethods.rand.nextInt(lavaFrequency) == 0) {
+									if (rand.nextInt(lavaFrequency) == 0) {
 										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Lava.ordinal()));
 									}
 									break;
 								case 1:
-									if (GeneralMethods.rand.nextInt(metalFrequency) == 0) {
+									if (rand.nextInt(metalFrequency) == 0) {
 										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Metal.ordinal()));
 									}
 									break;
 							}
 							break;
 						case Fire:
-							switch (GeneralMethods.rand.nextInt(2)) {
+							switch (rand.nextInt(2)) {
 								case 0:
-									if (GeneralMethods.rand.nextInt(combustionFrequency) == 0) {
+									if (rand.nextInt(combustionFrequency) == 0) {
 										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Combustion.ordinal()));
 									}
 									break;
 								case 1:
-									if (GeneralMethods.rand.nextInt(lightningFrequency) == 0) {
+									if (rand.nextInt(lightningFrequency) == 0) {
 										entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Lightning.ordinal()));
 									}
 									break;
 							}
 							break;
 						case Water:
-							if (GeneralMethods.rand.nextInt(iceFrequency) == 0) {
+							if (rand.nextInt(iceFrequency) == 0) {
 								entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, SubElement.Ice.ordinal()));
 							}
 							break;
@@ -209,13 +213,11 @@ public class MobMethods {
 	public static boolean canBend(LivingEntity entity) {
 		if (!hasElement(entity)) return false;
 		if (GeneralMethods.hasRPG()) {
-			if (EventManager.marker.get(entity.getWorld()) != null) {
-				if (EventManager.marker.get(entity.getWorld()).equalsIgnoreCase("SolarEclipse") && getElement(entity).isFirebender()) {
-					return false;
-				}
-				if (EventManager.marker.get(entity.getWorld()).equalsIgnoreCase("LunarEclipse") && getElement(entity).isWaterbender()) {
-					return false;
-				}
+			if (FireAbility.isSolarEclipse(entity.getWorld()) && getElement(entity).isFirebender()) {
+				return false;
+			}
+			if (WaterAbility.isLunarEclipse(entity.getWorld()) && getElement(entity).isWaterbender()) {
+				return false;
 			}
 		}
 		return true;
@@ -226,9 +228,8 @@ public class MobMethods {
 	 * @param block
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	public static boolean isTransparent(Block block) {
-		if (!Arrays.asList(EarthMethods.transparentToEarthbending).contains(block.getTypeId())) {
+		if (!Arrays.asList(EarthAbility.getTransparentMaterial()).contains(block.getType())) {
 			return false;
 		}
 		return true;
@@ -246,9 +247,9 @@ public class MobMethods {
 		List<Integer> checked = new ArrayList<Integer>();
 		List<Block> blocks = GeneralMethods.getBlocksAroundPoint(location, radius);
 		for (int i = 0; i < blocks.size(); i++) {
-			int index = GeneralMethods.rand.nextInt(blocks.size());
+			int index = rand.nextInt(blocks.size());
 			while (checked.contains(index)) {
-				index = GeneralMethods.rand.nextInt(blocks.size());
+				index = rand.nextInt(blocks.size());
 			}
 			checked.add(index);
 			Block block = blocks.get(index);
@@ -258,15 +259,15 @@ public class MobMethods {
 			if (sub != null) {
 				switch (sub) {
 					case Lava:
-						if (EarthMethods.isLava(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+						if (ElementalAbility.isLava(block) && isTransparent(block.getRelative(BlockFace.UP))) {
 							return block;
 						}
 					case Metal:
-						if (EarthMethods.isMetal(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+						if (ElementalAbility.isMetal(block) && isTransparent(block.getRelative(BlockFace.UP))) {
 							return block;
 						}
 					case Ice:
-						if (WaterMethods.isIcebendable(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+						if (ElementalAbility.isIce(block) && isTransparent(block.getRelative(BlockFace.UP))) {
 							return block;
 						}
 					default:
@@ -275,11 +276,11 @@ public class MobMethods {
 			} else {
 				switch (element) {
 					case Earth:
-						if (EarthMethods.isEarthbendable(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+						if (EarthAbility.isEarthbendable(block.getType()) && isTransparent(block.getRelative(BlockFace.UP))) {
 							return block;
 						}
 					case Water:
-						if (WaterMethods.isWater(block) && isTransparent(block.getRelative(BlockFace.UP))) {
+						if (ElementalAbility.isWater(block) && isTransparent(block.getRelative(BlockFace.UP))) {
 							return block;
 						}
 					default:

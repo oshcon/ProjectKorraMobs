@@ -2,7 +2,6 @@ package com.jedk1.projectkorra.mobs.ability.fire;
 
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-import com.projectkorra.projectkorra.GeneralMethods;
 
 import org.bukkit.entity.LivingEntity;
 
@@ -21,7 +20,7 @@ public class FireAbility {
 			new FireJet(entity, target.getLocation());
 			return;
 		}
-		if (GeneralMethods.rand.nextInt(frequency) == 0 && MobMethods.hasSubElement(entity)) {
+		if (MobMethods.rand.nextInt(frequency) == 0 && MobMethods.hasSubElement(entity)) {
 			switch (MobMethods.getSubElement(entity)) {
 				case Lightning:
 					if (lightning) {
@@ -37,7 +36,7 @@ public class FireAbility {
 					break;
 			}
 		} else {
-			switch (GeneralMethods.rand.nextInt(2)) {
+			switch (MobMethods.rand.nextInt(2)) {
 				case 0:
 					new FireBlast(entity, target.getLocation());
 					break;

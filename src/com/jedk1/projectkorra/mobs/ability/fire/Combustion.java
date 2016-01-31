@@ -3,9 +3,8 @@ package com.jedk1.projectkorra.mobs.ability.fire;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.firebending.FireMethods;
+import com.projectkorra.projectkorra.ability.ElementalAbility;
 import com.projectkorra.projectkorra.util.ParticleEffect;
-import com.projectkorra.projectkorra.waterbending.WaterMethods;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -60,12 +59,12 @@ public class Combustion {
 			explosion(head);
 			return false;
 		}
-		if (!MobMethods.isTransparent(head.getBlock()) || WaterMethods.isWater(head.getBlock())) {
+		if (!MobMethods.isTransparent(head.getBlock()) || ElementalAbility.isWater(head.getBlock())) {
 			return false;
 		}
 		dir = GeneralMethods.getDirection(head, target.getLocation()).normalize();
 		head.add(dir.multiply(1));
-		FireMethods.playFirebendingSound(head);
+		com.projectkorra.projectkorra.ability.FireAbility.playFirebendingSound(head);
 		ParticleEffect.FLAME.display(head, 0.1F, 0.1F, 0.1F, 0, 6);
 		ParticleEffect.LARGE_SMOKE.display(head, 0.1F, 0.1F, 0.1F, 0, 6);
 		ParticleEffect.FIREWORKS_SPARK.display(head, 0.1F, 0.1F, 0.1F, 0, 6);

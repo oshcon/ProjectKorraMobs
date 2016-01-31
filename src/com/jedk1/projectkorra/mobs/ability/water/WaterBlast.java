@@ -6,7 +6,6 @@ import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.airbending.AirShield;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 import com.projectkorra.projectkorra.util.TempBlock;
-import com.projectkorra.projectkorra.waterbending.WaterMethods;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -72,7 +71,7 @@ public class WaterBlast {
 		if (AirShield.isWithinShield(head)) {
 			return false;
 		}
-		if (WaterMethods.isWater(head.getBlock())) {
+		if (com.projectkorra.projectkorra.ability.WaterAbility.isWater(head.getBlock())) {
 			ParticleEffect.WATER_BUBBLE.display((float) Math.random(), (float) Math.random(), (float) Math.random(), 0f, 5, head, 257D);
 		}
 		new TempBlock(head.getBlock(), Material.STATIONARY_WATER, (byte) 0);

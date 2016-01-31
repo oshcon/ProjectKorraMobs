@@ -3,7 +3,7 @@ package com.jedk1.projectkorra.mobs.ability.fire;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.firebending.FireMethods;
+import com.projectkorra.projectkorra.ability.LightningAbility;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -71,9 +71,9 @@ public class Lightning {
 			for(double i = 0; i < gap; i+= step){
 				this.step += step;
 				location = location.add(location.getDirection().clone().multiply(step));
-				FireMethods.playLightningbendingParticle(location, 0f, 0f, 0f);
+				LightningAbility.playLightningbendingParticle(location, 0f, 0f, 0f);
 			}
-			switch (GeneralMethods.rand.nextInt(3)) {
+			switch (MobMethods.rand.nextInt(3)) {
 			case 0:
 				location.setYaw(initYaw - arc);
 				break;
@@ -84,7 +84,7 @@ public class Lightning {
 				location.setYaw(initYaw);
 				break;
 			}
-			switch (GeneralMethods.rand.nextInt(3)) {
+			switch (MobMethods.rand.nextInt(3)) {
 			case 0:
 				location.setPitch(initPitch - arc);
 				break;
@@ -96,7 +96,7 @@ public class Lightning {
 				break;
 			}
 
-			if(GeneralMethods.rand.nextInt(3) == 0) {
+			if(MobMethods.rand.nextInt(3) == 0) {
 				location.getWorld().playSound(location, Sound.CREEPER_HISS, 1, 0);
 			}
 

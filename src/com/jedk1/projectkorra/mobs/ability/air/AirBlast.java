@@ -3,7 +3,6 @@ package com.jedk1.projectkorra.mobs.ability.air;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.airbending.AirMethods;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Creature;
@@ -54,8 +53,8 @@ public class AirBlast {
 			return false;
 		}
 		head.add(dir.multiply(1));
-		AirMethods.playAirbendingParticles(head, 5);
-		AirMethods.playAirbendingSound(head);
+		com.projectkorra.projectkorra.ability.AirAbility.playAirbendingParticles(head, 5);
+		com.projectkorra.projectkorra.ability.AirAbility.playAirbendingSound(head);
 		for (Entity entity : GeneralMethods.getEntitiesAroundPoint(head, 2)) {
 			if (entity instanceof LivingEntity && entity.getEntityId() != this.entity.getEntityId()) {
 				entity.setVelocity(dir.multiply(knockback));

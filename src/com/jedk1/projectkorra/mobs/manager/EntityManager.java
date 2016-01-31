@@ -9,12 +9,12 @@ import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
 import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
 import com.jedk1.projectkorra.mobs.object.Element;
 import com.jedk1.projectkorra.mobs.object.PKEntity;
-import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.waterbending.Bloodbending;
 
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
 
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,6 +23,7 @@ public class EntityManager {
 	public static ConcurrentHashMap<UUID, PKEntity> entityarray = new ConcurrentHashMap<UUID, PKEntity>();
 
 	private static int chance = ProjectKorraMobs.plugin.getConfig().getInt("Properties.BendFrequency");
+	static Random rand = new Random();
 
 	public EntityManager() {
 
@@ -65,7 +66,7 @@ public class EntityManager {
 			}
 			
 			if (entity.getMetadata("element").size() > 0) {
-				if (GeneralMethods.rand.nextInt(chance) == 0) {
+				if (rand.nextInt(chance) == 0) {
 					if (!entity.hasLineOfSight(target)) {
 						return;
 					}

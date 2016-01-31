@@ -1,6 +1,6 @@
 package com.jedk1.projectkorra.mobs.object;
 
-import com.projectkorra.projectkorra.GeneralMethods;
+import com.jedk1.projectkorra.mobs.MobMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ public enum SubElement {
 			}
 		}
 		if (subs.isEmpty()) return null;
-		return subs.get(GeneralMethods.rand.nextInt(subs.size()));
+		return subs.get(MobMethods.rand.nextInt(subs.size()));
 	}
 	
 	public static SubElement getType(String string) {

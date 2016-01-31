@@ -2,7 +2,6 @@ package com.jedk1.projectkorra.mobs.ability.air;
 
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-import com.projectkorra.projectkorra.GeneralMethods;
 
 import org.bukkit.entity.LivingEntity;
 
@@ -18,7 +17,7 @@ public class AirAbility {
 			new AirScooter(entity, target.getLocation());
 			return;
 		}
-		switch (GeneralMethods.rand.nextInt(2)) {
+		switch (MobMethods.rand.nextInt(2)) {
 			case 0:
 				new AirBlast(entity, target.getLocation());
 				break;

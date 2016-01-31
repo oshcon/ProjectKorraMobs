@@ -5,7 +5,6 @@ import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.object.Element;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.airbending.AirShield;
-import com.projectkorra.projectkorra.earthbending.EarthMethods;
 import com.projectkorra.projectkorra.util.TempBlock;
 
 import org.bukkit.Location;
@@ -55,7 +54,7 @@ public class EarthBlast {
 		head = entity.getEyeLocation();
 		dir = GeneralMethods.getDirection(origin.add(0, 1, 0), target).normalize();
 		id = ID;
-		EarthMethods.playEarthbendingSound(origin);
+		com.projectkorra.projectkorra.ability.EarthAbility.playEarthbendingSound(origin);
 		instances.put(id, this);
 		if (ID == Integer.MAX_VALUE) {
 			ID = Integer.MIN_VALUE;

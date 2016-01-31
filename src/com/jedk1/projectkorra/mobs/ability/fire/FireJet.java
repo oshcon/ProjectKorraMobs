@@ -1,9 +1,8 @@
 package com.jedk1.projectkorra.mobs.ability.fire;
 
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-import com.projectkorra.projectkorra.firebending.FireMethods;
+import com.projectkorra.projectkorra.ability.ElementalAbility;
 import com.projectkorra.projectkorra.util.ParticleEffect;
-import com.projectkorra.projectkorra.waterbending.WaterMethods;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -46,10 +45,10 @@ public class FireJet {
 		if (entity.getLocation().distance(target) < 3) {
 			return false;
 		}
-		if (WaterMethods.isWater(entity.getLocation().getBlock())) {
+		if (ElementalAbility.isWater(entity.getLocation().getBlock())) {
 			return false;
 		}
-		FireMethods.playFirebendingSound(entity.getLocation());
+		com.projectkorra.projectkorra.ability.FireAbility.playFirebendingSound(entity.getLocation());
 		entity.setVelocity(entity.getLocation().getDirection().multiply(speed));
 		ParticleEffect.FLAME.display(entity.getLocation(), 0.7F, 0.7F, 0.7F, 0, 6);
 		ParticleEffect.SMOKE.display(entity.getLocation(), 0.7F, 0.7F, 0.7F, 0, 3);

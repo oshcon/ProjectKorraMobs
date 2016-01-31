@@ -1,8 +1,6 @@
 package com.jedk1.projectkorra.mobs.ability.air;
 
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-import com.projectkorra.projectkorra.airbending.AirMethods;
-import com.projectkorra.projectkorra.waterbending.WaterMethods;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -45,12 +43,12 @@ public class AirScooter {
 		if (entity.getLocation().distance(target) < 3) {
 			return false;
 		}
-		if (WaterMethods.isWater(entity.getLocation().getBlock())) {
+		if (com.projectkorra.projectkorra.ability.WaterAbility.isWater(entity.getLocation().getBlock())) {
 			return false;
 		}
 		entity.setVelocity(entity.getLocation().getDirection().multiply(speed));
-		AirMethods.playAirbendingParticles(entity.getLocation(), 5, (float) Math.random(), (float) Math.random(), (float) Math.random());
-		AirMethods.playAirbendingSound(entity.getLocation());
+		com.projectkorra.projectkorra.ability.AirAbility.playAirbendingParticles(entity.getLocation(), 5, (float) Math.random(), (float) Math.random(), (float) Math.random());
+		com.projectkorra.projectkorra.ability.AirAbility.playAirbendingSound(entity.getLocation());
 		return true;
 	}
 	
