@@ -56,7 +56,7 @@ public class EntityManager {
 			LivingEntity entity = pkentity.getEntity();
 			LivingEntity target = pkentity.getTarget();
 			Creature e = (Creature) entity;
-			if (entity == null || entity.isDead() || e.getTarget() == null || e.getTarget().isDead() || Bloodbending.isBloodbended(entity) || !MobMethods.hasElement(entity)) {
+			if (entity == null || entity.isDead() || e.getTarget() == null || e.getTarget().isDead() || Bloodbending.isBloodbent(entity) || !MobMethods.hasElement(entity)) {
 				entityarray.remove(uuid);
 				return;
 			}
