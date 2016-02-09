@@ -228,8 +228,9 @@ public class MobMethods {
 	 * @param block
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	public static boolean isTransparent(Block block) {
-		if (!Arrays.asList(EarthAbility.getTransparentMaterial()).contains(block.getType())) {
+		if (!Arrays.asList(EarthAbility.getTransparentMaterial()).contains(block.getTypeId())) {
 			return false;
 		}
 		return true;
