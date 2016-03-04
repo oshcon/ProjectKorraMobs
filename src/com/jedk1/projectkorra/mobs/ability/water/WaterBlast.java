@@ -44,7 +44,7 @@ public class WaterBlast {
 		head = entity.getEyeLocation();
 		dir = GeneralMethods.getDirection(entity.getLocation(), target).normalize();
 		EntityEquipment ee = entity.getEquipment();
-		ee.setItemInHand(new ItemStack(Material.POTION, 1));
+		ee.setItemInMainHand(new ItemStack(Material.POTION, 1));
 		id = ID;
 		instances.put(id, this);
 		if (ID == Integer.MAX_VALUE) {

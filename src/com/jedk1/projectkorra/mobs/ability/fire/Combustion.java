@@ -88,7 +88,7 @@ public class Combustion {
 		ParticleEffect.LARGE_SMOKE.display(loc, 0.0F, 0.0F, 0.0F, 1.0F, 5);
 		ParticleEffect.FIREWORKS_SPARK.display(loc, 0.0F, 0.0F, 0.0F, 1.0F, 5);
 		ParticleEffect.HUGE_EXPLOSION.display(loc, 0.0F, 0.0F, 0.0F, 0.1F, 2);
-		loc.getWorld().playSound(loc, Sound.EXPLODE, 1.0F, 0.8F);
+		loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 0.8F);
 	}
 	
 	private void remove() {
