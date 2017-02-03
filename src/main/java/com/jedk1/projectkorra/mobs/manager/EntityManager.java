@@ -41,7 +41,6 @@ public class EntityManager {
 			return;
 		}
 		entityarray.put(entity.getUniqueId(), new PKEntity(entity, target));
-		MobMethods.assignElement(entity);
 	}
 
 	public static void removeEntity(LivingEntity entity) {

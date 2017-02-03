@@ -101,9 +101,11 @@ public class MobListener implements Listener {
 
 	@EventHandler
 	public void onCombust(EntityCombustEvent event) {
-		if (MobMethods.hasElement((LivingEntity) event.getEntity())) {
-			if (MobMethods.isDisguised(event.getEntity())) {
-				event.setCancelled(true);
+		if (event.getEntity() instanceof LivingEntity) {
+			if (MobMethods.hasElement((LivingEntity) event.getEntity())) {
+				if (MobMethods.isDisguised(event.getEntity())) {
+					event.setCancelled(true);
+				}
 			}
 		}
 	}
