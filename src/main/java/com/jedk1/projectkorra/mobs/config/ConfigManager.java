@@ -27,6 +27,7 @@ public class ConfigManager {
 		});
 		
 		config.addDefault("Properties.BendFrequency", 150);
+		config.addDefault("Properties.SpawnFrequency", 75);
 		config.addDefault("Properties.Air.NoFallDamage", true);
 		config.addDefault("Properties.Avatar.Enabled", true);
 		config.addDefault("Properties.Avatar.Frequency", 150);
@@ -45,6 +46,19 @@ public class ConfigManager {
 		config.addDefault("Properties.SubElements.Water.AbilityFrequency", 3);
 		config.addDefault("Properties.SubElements.Water.Ice.Enabled", true);
 		config.addDefault("Properties.SubElements.Water.Ice.Frequency", 2);
+
+		config.addDefault("Properties.LibsDisguises.DisguiseMobs", false);
+		config.addDefault("Properties.LibsDisguises.DisguiseTheseMobs", new String[] {
+				EntityType.ZOMBIE.toString(),
+				EntityType.PIG_ZOMBIE.toString(),
+				EntityType.VILLAGER.toString()
+		});
+		config.addDefault("Properties.LibsDisguises.Skin.Air", "AirBender");
+		config.addDefault("Properties.LibsDisguises.Skin.Earth", "EarthBender");
+		config.addDefault("Properties.LibsDisguises.Skin.Fire", "FireBender");
+		config.addDefault("Properties.LibsDisguises.Skin.Water", "WaterBender");
+		config.addDefault("Properties.LibsDisguises.Skin.Avatar", "Avatar");
+		config.addDefault("Properties.LibsDisguises.ClearDisguisedMobDrops", true);
 		
 		config.addDefault("Abilities.Air.Enabled", true);
 		config.addDefault("Abilities.Air.AirBlast.Knockback", 1.0);

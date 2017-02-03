@@ -9,6 +9,9 @@ import com.projectkorra.projectkorra.ability.ElementalAbility;
 import com.projectkorra.projectkorra.ability.FireAbility;
 import com.projectkorra.projectkorra.ability.WaterAbility;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -35,8 +38,17 @@ public class MobMethods {
 	private static int lightningFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Fire.Lightning.Frequency");
 	private static int iceFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Water.Ice.Frequency");
 
+	private static boolean isDisguisingEnabled = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.LibsDisguises.DisguiseMobs");
+	private static String airSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Air");
+	private static String earthSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Earth");
+	private static String waterSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Water");
+	private static String fireSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Fire");
+	private static String avatarSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Avatar");
+	
+	
 	public static List<String> disabledWorlds = new ArrayList<String>();
 	public static List<String> entityTypes = new ArrayList<String>();
+	public static List<String> disguisable = new ArrayList<String>();
 
 	public static Random rand = new Random();
 
@@ -51,7 +63,9 @@ public class MobMethods {
 			i = 4;
 		}
 		if (!entity.hasMetadata("element")) {
+
 			entity.setMetadata("element", new FixedMetadataValue(ProjectKorraMobs.plugin, i));
+
 			if (subelements) {
 				if (!entity.hasMetadata("subelement")) {
 					switch (getElement((LivingEntity) entity)) {
@@ -96,6 +110,64 @@ public class MobMethods {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Assigns a disguise to the entity if player skins are enabled
+	 * This requires the plugin LibsDisguises to function
+	 * @param entity
+	 */
+	public static void assignDisguise(Entity entity) {
+		if (Compatibility.isHooked("LibsDisguises")) {
+			if (isDisguisingEnabled) {
+				if (canEntityBeDisguised(entity.getType())) {
+					if (hasElement((LivingEntity) entity)) {
+						PlayerDisguise dis;
+
+						switch (getElement((LivingEntity) entity)) {
+							case Air:
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&7Air Bender"), airSkin);
+								DisguiseAPI.disguiseEntity(entity, dis);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&7Air Bender"));
+								break;
+							case Earth:
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&aEarth Bender"), earthSkin);
+								DisguiseAPI.disguiseEntity(entity, dis);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&aEarth Bender"));
+								break;
+							case Water:
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&bWater Bender"), waterSkin);
+								DisguiseAPI.disguiseEntity(entity, dis);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&bWater Bender"));
+								break;
+							case Fire:
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&cFire Bender"), fireSkin);
+								DisguiseAPI.disguiseEntity(entity, dis);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&cFire Bender"));
+								break;
+							case Avatar:
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&5Avatar"), avatarSkin);
+								DisguiseAPI.disguiseEntity(entity, dis);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&5Avatar"));
+								break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Returns true if the specified entity is disguised
+	 * This requires the plugin LibsDisguises to function
+	 * @param entity
+	 */
+	public static boolean isDisguised(Entity entity) {
+		if (Compatibility.isHooked("LibsDisguises")) {
+			return DisguiseAPI.isDisguised(entity);
+		}
+
+		return false;
 	}
 
 	/**
@@ -205,6 +277,15 @@ public class MobMethods {
 		return entityTypes.contains(type.toString());
 	}
 
+	/**
+	 * Returns true if the entity is enabled in the configuration.
+	 * @param type
+	 * @return
+	 */
+	public static boolean canEntityBeDisguised(EntityType type) {
+		return disguisable.contains(type.toString());
+	}
+	
 	/**
 	 * Returns true if the entity can bend.
 	 * @param entity
@@ -324,6 +405,18 @@ public class MobMethods {
 		if (ProjectKorraMobs.plugin.getConfig().getShortList("Properties.EntityTypes") != null) {
 			for (String s : ProjectKorraMobs.plugin.getConfig().getStringList("Properties.EntityTypes")) {
 				entityTypes.add(s);
+			}
+		}
+	}
+
+	/**
+	 * Registers entity types that can be disguised
+	 */
+	public static void registerDisguisableEntities() {
+		disguisable.clear();
+		if (ProjectKorraMobs.plugin.getConfig().getShortList("Properties.LibsDisguises.DisguiseTheseMobs") != null) {
+			for (String s : ProjectKorraMobs.plugin.getConfig().getStringList("Properties.LibsDisguises.DisguiseTheseMobs")) {
+				disguisable.add(s);
 			}
 		}
 	}

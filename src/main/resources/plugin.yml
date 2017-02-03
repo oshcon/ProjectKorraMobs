@@ -1,9 +1,9 @@
 name: ProjectKorraMobs
 version: 1.0.9
+authors: [jedk1, Simplicitee, Dooder07]
 main: com.jedk1.projectkorra.mobs.ProjectKorraMobs
-authors: ['jedk1']
-depend: ['ProjectKorra']
-softdepend: ['LibsDisguises']
+depend: [ProjectKorra]
+softdepend: [LibsDisguises]
 
 commands:
   projectkorramobs:
