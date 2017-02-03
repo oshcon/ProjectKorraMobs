@@ -9,7 +9,7 @@ import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
 import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
 import com.jedk1.projectkorra.mobs.object.Element;
 import com.jedk1.projectkorra.mobs.object.PKEntity;
-import com.projectkorra.projectkorra.waterbending.Bloodbending;
+import com.projectkorra.projectkorra.waterbending.blood.Bloodbending;
 
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;

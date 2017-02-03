@@ -97,7 +97,7 @@ public class Lightning {
 			}
 
 			if(MobMethods.rand.nextInt(3) == 0) {
-				location.getWorld().playSound(location, Sound.CREEPER_HISS, 1, 0);
+				location.getWorld().playSound(location, Sound.ENTITY_CREEPER_HURT, 1, 0);
 			}
 
 			for (Entity entity : GeneralMethods.getEntitiesAroundPoint(location, 2)) {

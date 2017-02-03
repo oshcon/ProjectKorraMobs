@@ -3,6 +3,7 @@ version: 1.0.9
 main: com.jedk1.projectkorra.mobs.ProjectKorraMobs
 authors: ['jedk1']
 depend: ['ProjectKorra']
+softdepend: ['LibsDisguises']
 
 commands:
   projectkorramobs:
