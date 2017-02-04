@@ -10,7 +10,9 @@ import com.projectkorra.projectkorra.ability.FireAbility;
 import com.projectkorra.projectkorra.ability.WaterAbility;
 
 import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import me.libraryaddict.disguise.disguisetypes.watchers.PlayerWatcher;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -39,13 +41,19 @@ public class MobMethods {
 	private static int iceFrequency = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SubElements.Water.Ice.Frequency");
 
 	private static boolean isDisguisingEnabled = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.LibsDisguises.DisguiseMobs");
+
 	private static String airSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Air");
 	private static String earthSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Earth");
 	private static String waterSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Water");
 	private static String fireSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Fire");
 	private static String avatarSkin = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Skin.Avatar");
-	
-	
+
+	private static String airName = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Name.Air");
+	private static String earthName = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Name.Earth");
+	private static String waterName = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Name.Water");
+	private static String fireName = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Name.Fire");
+	private static String avatarName = ProjectKorraMobs.plugin.getConfig().getString("Properties.LibsDisguises.Name.Avatar");
+
 	public static List<String> disabledWorlds = new ArrayList<String>();
 	public static List<String> entityTypes = new ArrayList<String>();
 	public static List<String> disguisable = new ArrayList<String>();
@@ -122,33 +130,38 @@ public class MobMethods {
 			if (isDisguisingEnabled) {
 				if (canEntityBeDisguised(entity.getType())) {
 					if (hasElement((LivingEntity) entity)) {
-						PlayerDisguise dis;
 
+						PlayerDisguise dis;
 						switch (getElement((LivingEntity) entity)) {
+
 							case Air:
-								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&7Air Bender"), airSkin);
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', airName), airSkin);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', airName));
 								DisguiseAPI.disguiseEntity(entity, dis);
-								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&7Air Bender"));
 								break;
+
 							case Earth:
-								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&aEarth Bender"), earthSkin);
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', earthName), earthSkin);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', earthName));
 								DisguiseAPI.disguiseEntity(entity, dis);
-								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&aEarth Bender"));
 								break;
+
 							case Water:
-								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&bWater Bender"), waterSkin);
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', waterName), waterSkin);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', waterName));
 								DisguiseAPI.disguiseEntity(entity, dis);
-								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&bWater Bender"));
 								break;
+
 							case Fire:
-								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&cFire Bender"), fireSkin);
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', fireName), fireSkin);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', fireName));
 								DisguiseAPI.disguiseEntity(entity, dis);
-								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&cFire Bender"));
 								break;
+
 							case Avatar:
-								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', "&5Avatar"), avatarSkin);
+								dis = new PlayerDisguise(ChatColor.translateAlternateColorCodes('&', avatarName), avatarSkin);
+								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', avatarName));
 								DisguiseAPI.disguiseEntity(entity, dis);
-								entity.setCustomName(ChatColor.translateAlternateColorCodes('&', "&5Avatar"));
 								break;
 						}
 					}
@@ -180,10 +193,12 @@ public class MobMethods {
 		if (entity == null) return false;
 		if (element != null) {
 			entity.setMetadata("element", new FixedMetadataValue(ProjectKorraMobs.plugin, element.ordinal()));
+			assignDisguise(entity);
 			if (sub == null) return true;
 		}
 		if (sub != null && sub.getElement().equals(element)) {
 			entity.setMetadata("subelement", new FixedMetadataValue(ProjectKorraMobs.plugin, sub.ordinal()));
+			assignDisguise(entity);
 			return true;
 		}
 		return false;

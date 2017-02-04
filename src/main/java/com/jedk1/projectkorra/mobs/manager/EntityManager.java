@@ -40,7 +40,13 @@ public class EntityManager {
 			entityarray.get(entity.getUniqueId()).setTarget(target);
 			return;
 		}
+
 		entityarray.put(entity.getUniqueId(), new PKEntity(entity, target));
+
+        // Not the prettiest, but effectively corrects any mistakes in mob disguises
+        if (!MobMethods.isDisguised(entity)) {
+            MobMethods.assignDisguise(entity);
+        }
 	}
 
 	public static void removeEntity(LivingEntity entity) {

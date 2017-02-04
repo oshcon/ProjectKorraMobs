@@ -1,19 +1,27 @@
 package com.jedk1.projectkorra.mobs.listener;
 
+import com.jedk1.projectkorra.mobs.Compatibility;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.manager.EntityManager;
 import com.projectkorra.projectkorra.event.BendingReloadEvent;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
+import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Vex;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class MobListener implements Listener {
 
@@ -21,8 +29,12 @@ public class MobListener implements Listener {
 
 	private static boolean airFallDamage = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.Air.NoFallDamage");
 	private static boolean villagerFightBack = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.Entity.Villager.FightBack");
-	private static boolean isDisguisingEnabled = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.LibsDisguises.DisguiseMob");
-	private static boolean clearMobDrops = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.LibsDisguises.ClearDisguisedMobDrops");
+
+    private static boolean isDisguisingEnabled = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.LibsDisguises.DisguiseMob");
+    private static boolean clearMobDrops = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.LibsDisguises.ClearDisguisedMobDrops");
+    private static boolean spawnSpirits = ProjectKorraMobs.plugin.getConfig().getBoolean("Properties.LibsDisguises.Spirits.Enabled");
+    private static int spawnSpiritChance = ProjectKorraMobs.plugin.getConfig().getInt("Properties.LibsDisguises.Spirits.Chance");
+
 	private static int spawnChance = ProjectKorraMobs.plugin.getConfig().getInt("Properties.SpawnFrequency");
 
 	public MobListener(ProjectKorraMobs plugin) {
@@ -61,11 +73,42 @@ public class MobListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (MobMethods.hasElement(event.getEntity())) {
+
 			if (clearMobDrops) {
 				if (MobMethods.isDisguised(event.getEntity())) {
+                    event.getEntity().getEquipment().clear();
 					event.getDrops().clear();
 				}
 			}
+
+			if (spawnSpirits) {
+                if (Compatibility.isHooked("LibsDisguises")) {
+
+                    if (event.getEntity().hasMetadata("korramob_spirit")) {
+                        return;
+                    }
+
+                    if (event.getEntity().hasMetadata("spawnermob")) {
+                        return;
+                    }
+
+                    if (MobMethods.rand.nextInt(100) <= spawnSpiritChance) {
+                        Location l = event.getEntity().getLocation();
+
+                        Vex v = (Vex) l.getWorld().spawnEntity(l, EntityType.VEX);
+
+                        v.setCustomName(ProjectKorraMobs.addColor("&7Spirit"));
+                        v.setCustomNameVisible(false);
+                        v.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1.0);
+                        v.setMetadata("korramob_spirit", new FixedMetadataValue(plugin, "spirit"));
+
+                        MiscDisguise d = new MiscDisguise(DisguiseType.SHULKER_BULLET);
+                        DisguiseAPI.disguiseEntity(v, d);
+                    }
+                } else {
+                    ProjectKorraMobs.log("&cAttempted to spawn a spirit, however LibsDisguises could not be found!");
+                }
+            }
 		}
 	}
 	
@@ -79,7 +122,8 @@ public class MobListener implements Listener {
 		}
 
 		if (reason.equals(CreatureSpawnEvent.SpawnReason.SPAWNER) || reason.equals(CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) ) {
-			return;
+            entity.setMetadata("spawnermob", new FixedMetadataValue(plugin, "ignoreme"));
+            return;
 		}
 
 		if (MobMethods.canEntityBend(entity.getType())) {
