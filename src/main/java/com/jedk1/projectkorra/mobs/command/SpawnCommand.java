@@ -4,7 +4,6 @@ import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.object.Element;
 import com.jedk1.projectkorra.mobs.object.SubElement;
 import com.projectkorra.projectkorra.GeneralMethods;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;

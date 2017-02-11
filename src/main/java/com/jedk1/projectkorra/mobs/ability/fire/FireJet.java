@@ -3,7 +3,6 @@ package com.jedk1.projectkorra.mobs.ability.fire;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.ability.ElementalAbility;
 import com.projectkorra.projectkorra.util.ParticleEffect;
-
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 

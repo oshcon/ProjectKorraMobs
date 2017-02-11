@@ -1,11 +1,10 @@
 package com.jedk1.projectkorra.mobs.ability;
 
-import com.jedk1.projectkorra.mobs.ability.earth.EarthAbility;
-import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ability.air.AirAbility;
+import com.jedk1.projectkorra.mobs.ability.earth.EarthAbility;
+import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
 import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
-
 import org.bukkit.entity.LivingEntity;
 
 public class AvatarAbility {

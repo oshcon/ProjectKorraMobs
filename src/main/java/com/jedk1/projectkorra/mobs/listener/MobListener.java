@@ -1,11 +1,10 @@
 package com.jedk1.projectkorra.mobs.listener;
 
 import com.jedk1.projectkorra.mobs.Compatibility;
-import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.MobMethods;
+import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.manager.EntityManager;
 import com.projectkorra.projectkorra.event.BendingReloadEvent;
-
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;

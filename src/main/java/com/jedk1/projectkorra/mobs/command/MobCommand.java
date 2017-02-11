@@ -143,8 +143,8 @@ public abstract class MobCommand implements SubCommand {
 	
 	/**
 	 * Checks if the string is numeric.
-	 * @param id
-	 * @return
+	 * @param id String to be checked
+	 * @return True if the string represents a numeric value
 	 */
 	protected boolean isNumeric(String id) {
 		NumberFormat formatter = NumberFormat.getInstance();

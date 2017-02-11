@@ -2,7 +2,6 @@ package com.jedk1.projectkorra.mobs.ability.fire;
 
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-
 import org.bukkit.entity.LivingEntity;
 
 public class FireAbility {

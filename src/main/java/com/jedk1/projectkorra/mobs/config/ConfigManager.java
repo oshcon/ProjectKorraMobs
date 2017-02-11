@@ -1,7 +1,6 @@
 package com.jedk1.projectkorra.mobs.config;
 
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 

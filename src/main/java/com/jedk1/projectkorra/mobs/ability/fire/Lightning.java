@@ -4,7 +4,6 @@ import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.LightningAbility;
-
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creature;
@@ -20,7 +19,7 @@ public class Lightning {
 	private static ConcurrentHashMap<Integer, Bolt> bolts = new ConcurrentHashMap<Integer, Bolt>();
 	
 	private static double damage = ProjectKorraMobs.plugin.getConfig().getDouble("Abilities.Earth.Lightning.Damage");
-	
+
 	private int id;
 	private static int ID = Integer.MIN_VALUE;
 	

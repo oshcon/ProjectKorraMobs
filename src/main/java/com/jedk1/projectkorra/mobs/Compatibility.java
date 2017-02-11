@@ -25,28 +25,29 @@ public class Compatibility {
      */
     public static void checkHooks() {
         hooked = new HashMap<>();
+        hookPlugin("ProjectKorra", "1.8.2", "1.8.2");
         hookPlugin("LibsDisguises", "9.2.4", "9.2.4");
     }
 
     /**
-     * Attempts to hook the specified plugin with kore by comparing the plugin's versions
+     * Attempts to hook the specified plugin with ProjectKorraMobs by comparing the plugin's versions
      * with ones known to be compatible, then hooks the plugin if the version falls
      * on or between the minimum and maximum.
      * <p>
-     * If the plugin's version falls outside of the compatible range, PKM will attempt to
+     * If the plugin's version falls outside of the compatible range, ProjectKorraMobs will attempt to
      * hook the specified plugin anyways, with no guarantees.
      *
-     * @param   name      the name of the plugin to hook with kore
-     * @param   min       the minimum known compatible version with kore
-     * @param   max       the maximum known compatible version with kore
-     * @return  boolean   whether or not the plugin successfully hooked with kore
+     * @param   name      the name of the plugin to hook with ProjectKorraMobs
+     * @param   min       the minimum known compatible version with ProjectKorraMobs
+     * @param   max       the maximum known compatible version with ProjectKorraMobs
+     * @return  boolean   whether or not the plugin successfully hooked with ProjectKorraMobs
      */
     public static boolean hookPlugin(String name, String min, String max) {
         Plugin hook = Bukkit.getPluginManager().getPlugin(name);
 
         if (hook != null) {
             String rawVersion = hook.getDescription().getVersion();
-            String[] versionPart = rawVersion.split("\\-");
+            String[] versionPart = rawVersion.split("-");
             String version = versionPart[0];
 
             if (isSupported(version, min, max)) {
@@ -61,7 +62,7 @@ public class Compatibility {
                 try {
                     if (!hooked.containsKey(name)) {
                         hooked.put(name, hook);
-                        ProjectKorraMobs.log("Hooked into " + name + " v" + hook.getDescription().getVersion() + ". However, this version is not officially supported by PKM.");
+                        ProjectKorraMobs.log("Hooked into " + name + " v" + hook.getDescription().getVersion() + ". However, this version is not officially supported by ProjectKorraMobs.");
                         return true;
                     }
 
@@ -81,8 +82,8 @@ public class Compatibility {
      * Compares the specified version string with a known compatible range of versions.
      *
      * @param   version     the plugin's current version
-     * @param   min         the minimum known compatible version with kore
-     * @param   max         the maximum known compatible version with kore
+     * @param   min         the minimum known compatible version with ProjectKorraMobs
+     * @param   max         the maximum known compatible version with ProjectKorraMobs
      * @return  boolean     whether or not the plugin's version falls inside the compatible range
      */
     public static boolean isSupported(String version, String min, String max) {

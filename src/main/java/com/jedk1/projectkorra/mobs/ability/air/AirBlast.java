@@ -1,9 +1,8 @@
 package com.jedk1.projectkorra.mobs.ability.air;
 
-import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.MobMethods;
+import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;

@@ -1,11 +1,10 @@
 package com.jedk1.projectkorra.mobs.ability.fire;
 
-import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.MobMethods;
+import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.ability.ElementalAbility;
 import com.projectkorra.projectkorra.util.ParticleEffect;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;

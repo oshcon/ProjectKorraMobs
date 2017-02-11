@@ -8,11 +8,8 @@ import com.projectkorra.projectkorra.ability.EarthAbility;
 import com.projectkorra.projectkorra.ability.ElementalAbility;
 import com.projectkorra.projectkorra.ability.FireAbility;
 import com.projectkorra.projectkorra.ability.WaterAbility;
-
 import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.PlayerWatcher;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -229,10 +226,7 @@ public class MobMethods {
 	 * @return
 	 */
 	public static boolean isAvatar(LivingEntity entity) {
-		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 4)) {
-			return true;
-		}
-		return false;
+		return entity.hasMetadata("element") && entity.getMetadata("element").size() > 0 && (entity.getMetadata("element").get(0).asInt() == 4);
 	}
 
 	/**
@@ -241,10 +235,7 @@ public class MobMethods {
 	 * @return
 	 */
 	public static boolean hasElement(LivingEntity entity) {
-		if (entity.hasMetadata("element") && entity.getMetadata("element").size() > 0) {
-			return true;
-		}
-		return false;
+		return entity.hasMetadata("element") && entity.getMetadata("element").size() > 0;
 	}
 
 	/**
@@ -265,10 +256,7 @@ public class MobMethods {
 	 * @return
 	 */
 	public static boolean hasSubElement(LivingEntity entity) {
-		if (entity.hasMetadata("subelement") && entity.getMetadata("subelement").size() > 0) {
-			return true;
-		}
-		return false;
+		return entity.hasMetadata("subelement") && entity.getMetadata("subelement").size() > 0;
 	}
 
 	/**
@@ -326,10 +314,7 @@ public class MobMethods {
 	 */
 	@SuppressWarnings("deprecation")
 	public static boolean isTransparent(Block block) {
-		if (!Arrays.asList(EarthAbility.getTransparentMaterial()).contains(block.getTypeId())) {
-			return false;
-		}
-		return true;
+		return Arrays.asList(EarthAbility.getTransparentMaterial()).contains(block.getTypeId());
 	}
 
 	/**
@@ -394,10 +379,7 @@ public class MobMethods {
 	 * @return
 	 */
 	public static boolean isDisabledWorld(World world) {
-		if (disabledWorlds.contains(world.getName())) {
-			return true;
-		}
-		return false;
+		return disabledWorlds.contains(world.getName());
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package com.jedk1.projectkorra.mobs.command;
 
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,9 +23,7 @@ public class Commands {
 		PluginCommand pkm = plugin.getCommand("projectkorramobs");
 		new SpawnCommand();
 
-		/**
-		 * Set of all of the Classes which extend Command
-		 */
+		// Set of all of the Classes which extend Command
 
 		CommandExecutor exe;
 

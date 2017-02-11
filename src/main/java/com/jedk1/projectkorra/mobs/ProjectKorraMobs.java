@@ -1,15 +1,14 @@
 package com.jedk1.projectkorra.mobs;
 
+import com.jedk1.projectkorra.mobs.ability.air.AirAbility;
 import com.jedk1.projectkorra.mobs.ability.earth.EarthAbility;
 import com.jedk1.projectkorra.mobs.ability.fire.FireAbility;
-import com.jedk1.projectkorra.mobs.ability.air.AirAbility;
 import com.jedk1.projectkorra.mobs.ability.water.WaterAbility;
 import com.jedk1.projectkorra.mobs.command.Commands;
 import com.jedk1.projectkorra.mobs.config.ConfigManager;
 import com.jedk1.projectkorra.mobs.listener.MobListener;
 import com.jedk1.projectkorra.mobs.manager.AbilityManager;
 import com.jedk1.projectkorra.mobs.manager.EntityManager;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;

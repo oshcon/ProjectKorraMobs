@@ -1,7 +1,6 @@
 package com.jedk1.projectkorra.mobs.ability.air;
 
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
-
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 

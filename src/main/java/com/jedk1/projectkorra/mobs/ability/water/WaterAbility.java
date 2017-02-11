@@ -3,7 +3,6 @@ package com.jedk1.projectkorra.mobs.ability.water;
 import com.jedk1.projectkorra.mobs.MobMethods;
 import com.jedk1.projectkorra.mobs.ProjectKorraMobs;
 import com.jedk1.projectkorra.mobs.object.SubElement;
-
 import org.bukkit.entity.LivingEntity;
 
 public class WaterAbility {
